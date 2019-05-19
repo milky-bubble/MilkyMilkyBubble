@@ -10,11 +10,13 @@ public class Player extends Character {
     public void move() {
         super.move();
         switch(direction) {
-            case 1: y -= speed; break;
-            case 2: y += speed; break;
-            case 3: x -= speed; break;
-            case 4: x += speed; break;
+            case 4: y -= speed; break;
+            case 1: y += speed; break;
+            case 2: x -= speed; break;
+            case 3: x += speed; break;
         }
+        if(direction != 0 && direction != direction_cur) direction_cur = direction;
+        if(direction != 0) turn = (turn + 1) % 4;
         direction = 0;
     }
 }

@@ -19,7 +19,7 @@ public class GameMap {
         }
     }
 
-    private Player player1 = new Player(Config.BOARDER, Config.BOARDER, player1Img, 0);
+    private Player player1 = new Player(0, 0, player1Img, 0);
     private ElementLoader elementLoader = ElementLoader.getElementLoader();
     private List<List<String>> GameMapBlock = elementLoader.readBlockInfo();
 
@@ -38,22 +38,25 @@ public class GameMap {
         }
     }
 
+
     public void drawMap(Graphics g) {
 
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
             for(int j=0; j<Config.GAME_WIDTH; j++) {
-                g.drawImage(floor[i][j], Config.BOARDER+j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
-                        Config.BOARDER+(j+1)*Config.BLOCK_SIZE, Config.BOARDER+(i+1)*Config.BLOCK_SIZE,
+                g.drawImage(floor[i][j], j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
+                        (j+1)*Config.BLOCK_SIZE, Config.BOARDER+(i+1)*Config.BLOCK_SIZE,
                         0, 0, floor[i][j].getWidth(), floor[i][j].getHeight(), null);
-                g.drawImage(block[i][j], Config.BOARDER+j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
-                        Config.BOARDER+(j+1)*Config.BLOCK_SIZE, Config.BOARDER+(i+1)*Config.BLOCK_SIZE,
+                g.drawImage(block[i][j], j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
+                        (j+1)*Config.BLOCK_SIZE, Config.BOARDER+(i+1)*Config.BLOCK_SIZE,
                         0, 0, block[i][j].getWidth(), block[i][j].getHeight(), null);
 
             }
         }
-        g.drawImage(player1Img, Config.BOARDER+player1.getX(), Config.BOARDER+player1.getY(),
-                Config.BOARDER+player1.getX()+Config.BLOCK_SIZE, Config.BOARDER+player1.getY()+Config.BLOCK_SIZE,
-                0, 0, player1Img.getWidth()/4, player1Img.getHeight()/4, null);
+        int dx1 = player1.getX(), dy1 = Config.BOARDER+player1.getY();
+        int dx2 = dx1 + Config.BLOCK_SIZE, dy2 = dy1 + Config.BLOCK_SIZE;
+        int sx1 = player1.turn*player1Img.getWidth()/4, sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
+        int sx2 = sx1 + player1Img.getWidth()/4, sy2 = sy1 + player1Img.getHeight()/4;
+        g.drawImage(player1Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
     }
 

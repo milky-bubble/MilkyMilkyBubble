@@ -6,6 +6,8 @@ public class Character {
     protected boolean dead;
     protected int speed;
     protected int direction;
+    protected int turn;
+    protected int direction_cur;
 
     public Character(int x, int y, BufferedImage image, int direction) {
         this.x = x;
@@ -14,9 +16,19 @@ public class Character {
         this.image = image;
         this.speed = Config.INIT_SPEED;
         this.direction = direction;
+        this.turn = 0;
+        this.direction_cur = 1;
     }
 
     public void move() {}
+
+    public int getDirection_cur() {
+        return direction_cur;
+    }
+
+    public void setDirection_cur(int direction_cur) {
+        this.direction_cur = direction_cur;
+    }
 
     public void setDirection(int direction) {
         this.direction = direction;
@@ -64,5 +76,13 @@ public class Character {
 
     public int getDirection() {
         return direction;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
     }
 }
