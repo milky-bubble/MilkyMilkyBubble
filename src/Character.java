@@ -20,6 +20,22 @@ public class Character {
         this.direction_cur = 1;
     }
 
+    public boolean outOfLeftBounds() {
+        return x-speed < 0;
+    }
+
+    public boolean outOfRightBounds() {
+        return x+speed > Config.WINDOW_WIDTH-Config.BLOCK_SIZE;
+    }
+
+    public boolean outOfUpBounds() {
+        return y-speed < 0;
+    }
+
+    public boolean outOfDownBounds() {
+        return y+speed > Config.WINDOW_HEIGHT-Config.BLOCK_SIZE;
+    }
+
     public void move() {}
 
     public int getDirection_cur() {

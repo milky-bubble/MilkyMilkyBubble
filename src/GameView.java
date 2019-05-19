@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import static java.lang.Thread.sleep;
 
-// Try
 public class GameView extends JFrame implements Runnable {
     private GameMap gameMap = new GameMap();
     private Image offScreenImage = null;
