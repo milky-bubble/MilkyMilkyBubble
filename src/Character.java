@@ -26,25 +26,37 @@ public class Character {
 
     public boolean crashDown() {
         if(outOfDownBounds()) return true;
-        if(mb[(y+speed)/Config.BLOCK_SIZE+1][x/Config.BLOCK_SIZE].isWalkable()==false) return true;
+        int ax = (int)Math.ceil((double)(y+speed)/Config.BLOCK_SIZE);
+        int ay1 = (int)Math.floor((double)x/Config.BLOCK_SIZE);
+        int ay2 = (int)Math.ceil((double)x/Config.BLOCK_SIZE);
+        if(mb[ax][ay1].isWalkable()==false || mb[ax][ay2].isWalkable()==false) return true;
         return false;
     }
 
     public boolean crashUp() {
         if(outOfUpBounds()) return true;
-        if(mb[(y+speed)/Config.BLOCK_SIZE][x/Config.BLOCK_SIZE].isWalkable()==false) return true;
+        int ax = (int)Math.floor((double)(y-speed)/Config.BLOCK_SIZE);
+        int ay1 = (int)Math.floor((double)x/Config.BLOCK_SIZE);
+        int ay2 = (int)Math.ceil((double)x/Config.BLOCK_SIZE);
+        if(mb[ax][ay1].isWalkable()==false || mb[ax][ay2].isWalkable()==false) return true;
         return false;
     }
 
     public boolean crashLeft() {
         if(outOfLeftBounds()) return true;
-        if(mb[(y+speed)/Config.BLOCK_SIZE][x/Config.BLOCK_SIZE].isWalkable()==false) return true;
+        int ax1 = (int)Math.floor((double)y/Config.BLOCK_SIZE);
+        int ax2 = (int)Math.ceil((double)y/Config.BLOCK_SIZE);
+        int ay = (int)Math.floor((double)(x-speed)/Config.BLOCK_SIZE);
+        if(mb[ax1][ay].isWalkable()==false || mb[ax2][ay].isWalkable()==false) return true;
         return false;
     }
 
     public boolean crashRight() {
         if(outOfRightBounds()) return true;
-        if(mb[(y+speed)/Config.BLOCK_SIZE][x/Config.BLOCK_SIZE+1].isWalkable()==false) return true;
+        int ax1 = (int)Math.ceil((double)y/Config.BLOCK_SIZE);
+        int ax2 = (int)Math.floor((double)y/Config.BLOCK_SIZE);
+        int ay = (int)Math.ceil((double)(x+speed)/Config.BLOCK_SIZE);
+        if(mb[ax1][ay].isWalkable()==false || mb[ax2][ay].isWalkable()==false) return true;
         return false;
     }
 

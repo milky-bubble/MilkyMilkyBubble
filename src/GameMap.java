@@ -44,7 +44,6 @@ public class GameMap {
         }
     }
 
-
     public void drawMap(Graphics g) {
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
             for(int j=0; j<Config.GAME_WIDTH; j++) {
