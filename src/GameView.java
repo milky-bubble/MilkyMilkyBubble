@@ -27,6 +27,7 @@ public class GameView extends JFrame implements Runnable {
                     case KeyEvent.VK_DOWN: gameMap.getPlayer1().setDirection(1); break;
                     case KeyEvent.VK_LEFT: gameMap.getPlayer1().setDirection(2); break;
                     case KeyEvent.VK_RIGHT: gameMap.getPlayer1().setDirection(3); break;
+                    case KeyEvent.VK_ENTER: gameMap.getPlayer1().addBubble(); break;
                     default: gameMap.getPlayer1().setDirection(0);
                 }
             }

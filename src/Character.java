@@ -9,6 +9,9 @@ public class Character {
     protected int direction;
     protected int turn;
     protected int direction_cur;
+    protected int bubbleNum;
+    protected int bubblePower;
+    protected int bubbleNumMax;
 
     public Character(int x, int y, BufferedImage image, int direction) {
         this.x = x;
@@ -19,10 +22,20 @@ public class Character {
         this.direction = direction;
         this.turn = 0;
         this.direction_cur = 1;
+        this.bubbleNum = 0;
+        this.bubbleNumMax = 1;
+        this.bubblePower = 3;
     }
 
     MapBlock[][] mb = GameMap.getBlock();
 
+    public void addBubble() {
+        if(bubbleNum == bubbleNumMax) return;
+        Bubble b = new Bubble(x, y, bubblePower);
+        b.lastForCertainTime();
+        bubbleNum++;
+        GameMap.getBubbles().add(b);
+    }
 
     public boolean crashDown() {
         if(outOfDownBounds()) return true;
