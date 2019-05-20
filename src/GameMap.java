@@ -9,22 +9,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameMap {
-    private static BufferedImage[][] floor = new BufferedImage[Config.GAME_HEIGHT][Config.GAME_WIDTH];
-    private static MapBlock[][] block = new MapBlock[Config.GAME_HEIGHT][Config.GAME_WIDTH];
-    private static ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
-    private Player player1 = new Player(0, 0, player1Img, 0);
-    private Player player2 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, 0, player2Img, 0);
-    private Player player3 = new Player(0, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, player3Img, 0);
-    private Player player4 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, player4Img, 0);
-    private ElementLoader elementLoader = ElementLoader.getElementLoader();
-    private List<List<String>> GameMapBlock = elementLoader.readBlockInfo();
-
-
     private static BufferedImage player1Img;
     private static BufferedImage player2Img;
     private static BufferedImage player3Img;
     private static BufferedImage player4Img;
     private static BufferedImage bubbleImg;
+    private static BufferedImage floorImg;
 
     static {
         try {
@@ -33,10 +23,22 @@ public class GameMap {
             player3Img = ImageIO.read(new File("image/player3.png"));
             player4Img = ImageIO.read(new File("image/player4.png"));
             bubbleImg = ImageIO.read(new File("image/bubble.png"));
+            floorImg = ImageIO.read((new File("image/floor.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private static BufferedImage[][] floor = new BufferedImage[Config.GAME_HEIGHT][Config.GAME_WIDTH];
+    private static MapBlock[][] block = new MapBlock[Config.GAME_HEIGHT][Config.GAME_WIDTH];
+    private static ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+    private static Player player1 = new Player(0, 0, 1, player1Img, 0);
+    private static Player player2 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, 0, 2, player2Img, 0);
+    private static Player player3 = new Player(0, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, 3, player3Img, 0);
+    private static Player player4 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, 4, player4Img, 0);
+    private ElementLoader elementLoader = ElementLoader.getElementLoader();
+    private List<List<String>> GameMapBlock = elementLoader.readBlockInfo();
+
 
     public GameMap() throws IOException {
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
@@ -122,52 +124,10 @@ public class GameMap {
         player1.move();
     }
 
-    public Player getPlayer1() {
-        return player1;
-    }
 
-    public static BufferedImage[][] getFloor() {
-        return floor;
-    }
-
-    public static void setFloor(BufferedImage[][] floor) {
-        GameMap.floor = floor;
-    }
 
     public static MapBlock[][] getBlock() {
         return block;
-    }
-
-    public static void setBlock(MapBlock[][] block) {
-        GameMap.block = block;
-    }
-
-    public static BufferedImage getPlayer1Img() {
-        return player1Img;
-    }
-
-    public static void setPlayer1Img(BufferedImage player1Img) {
-        GameMap.player1Img = player1Img;
-    }
-
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
-    }
-
-    public ElementLoader getElementLoader() {
-        return elementLoader;
-    }
-
-    public void setElementLoader(ElementLoader elementLoader) {
-        this.elementLoader = elementLoader;
-    }
-
-    public List<List<String>> getGameMapBlock() {
-        return GameMapBlock;
-    }
-
-    public void setGameMapBlock(List<List<String>> gameMapBlock) {
-        GameMapBlock = gameMapBlock;
     }
 
     public static ArrayList<Bubble> getBubbles() {
@@ -176,5 +136,23 @@ public class GameMap {
 
     public static void setBubbles(ArrayList<Bubble> bubbles) {
         GameMap.bubbles = bubbles;
+    }
+
+    public static BufferedImage getFloorImg() {
+        return floorImg;
+    }
+
+    public static void setFloorImg(BufferedImage floorImg) {
+        GameMap.floorImg = floorImg;
+    }
+
+    public static Player getPlayer(int id) {
+        switch(id) {
+            case 1: return player1;
+            case 2: return player2;
+            case 3: return player3;
+            case 4: return player4;
+            default: return null;
+        }
     }
 }
