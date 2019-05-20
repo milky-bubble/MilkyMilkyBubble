@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +12,25 @@ public class GameMap {
     private static MapBlock[][] block = new MapBlock[Config.GAME_HEIGHT][Config.GAME_WIDTH];
 
     private static BufferedImage player1Img;
+    private static BufferedImage player2Img;
+    private static BufferedImage player3Img;
+    private static BufferedImage player4Img;
+
     static {
         try {
             player1Img = ImageIO.read(new File("image/player1.png"));
+            player2Img = ImageIO.read(new File("image/player2.png"));
+            player3Img = ImageIO.read(new File("image/player3.png"));
+            player4Img = ImageIO.read(new File("image/player4.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private Player player1 = new Player(0, 0, player1Img, 0);
+    private Player player2 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, 0, player2Img, 0);
+    private Player player3 = new Player(0, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, player3Img, 0);
+    private Player player4 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, player4Img, 0);
     private ElementLoader elementLoader = ElementLoader.getElementLoader();
     private List<List<String>> GameMapBlock = elementLoader.readBlockInfo();
 
@@ -56,12 +67,46 @@ public class GameMap {
             }
         }
 
-        int dx1 = player1.getX(), dy1 = Config.BOARDER+player1.getY();
-        int dx2 = dx1 + Config.BLOCK_SIZE, dy2 = dy1 + Config.BLOCK_SIZE;
-        int sx1 = player1.turn*player1Img.getWidth()/4, sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
-        int sx2 = sx1 + player1Img.getWidth()/4, sy2 = sy1 + player1Img.getHeight()/4;
+        int dx1, dx2, dy1, dy2, sx1, sx2, sy1, sy2;
+        dx1 = player1.getX();
+        dy1 = Config.BOARDER+player1.getY();
+        dx2 = dx1 + Config.BLOCK_SIZE;
+        dy2 = dy1 + Config.BLOCK_SIZE;
+        sx1 = player1.turn*player1Img.getWidth()/4;
+        sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
+        sx2 = sx1 + player1Img.getWidth()/4;
+        sy2 = sy1 + player1Img.getHeight()/4;
         g.drawImage(player1Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
+        dx1 = player2.getX();
+        dy1 = Config.BOARDER+player2.getY();
+        dx2 = dx1 + Config.BLOCK_SIZE;
+        dy2 = dy1 + Config.BLOCK_SIZE;
+        sx1 = player2.turn*player2Img.getWidth()/4;
+        sy1 = (player2.direction_cur-1)*player2Img.getHeight()/4;
+        sx2 = sx1 + player2Img.getWidth()/4;
+        sy2 = sy1 + player2Img.getHeight()/4;
+        g.drawImage(player2Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+
+        dx1 = player3.getX();
+        dy1 = Config.BOARDER+player3.getY();
+        dx2 = dx1 + Config.BLOCK_SIZE;
+        dy2 = dy1 + Config.BLOCK_SIZE;
+        sx1 = player3.turn*player3Img.getWidth()/4;
+        sy1 = (player3.direction_cur-1)*player3Img.getHeight()/4;
+        sx2 = sx1 + player3Img.getWidth()/4;
+        sy2 = sy1 + player3Img.getHeight()/4;
+        g.drawImage(player3Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+
+        dx1 = player4.getX();
+        dy1 = Config.BOARDER+player4.getY();
+        dx2 = dx1 + Config.BLOCK_SIZE;
+        dy2 = dy1 + Config.BLOCK_SIZE;
+        sx1 = player4.turn*player4Img.getWidth()/4;
+        sy1 = (player4.direction_cur-1)*player4Img.getHeight()/4;
+        sx2 = sx1 + player4Img.getWidth()/4;
+        sy2 = sy1 + player4Img.getHeight()/4;
+        g.drawImage(player4Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
 
     public void update() {
