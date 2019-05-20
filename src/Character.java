@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Character {
@@ -20,6 +21,33 @@ public class Character {
         this.direction_cur = 1;
     }
 
+    MapBlock[][] mb = GameMap.getBlock();
+
+
+    public boolean crashDown() {
+        if(outOfDownBounds()) return true;
+        if(mb[(y+speed)/Config.BLOCK_SIZE+1][x/Config.BLOCK_SIZE].isWalkable()==false) return true;
+        return false;
+    }
+
+    public boolean crashUp() {
+        if(outOfUpBounds()) return true;
+        if(mb[(y+speed)/Config.BLOCK_SIZE][x/Config.BLOCK_SIZE].isWalkable()==false) return true;
+        return false;
+    }
+
+    public boolean crashLeft() {
+        if(outOfLeftBounds()) return true;
+        if(mb[(y+speed)/Config.BLOCK_SIZE][x/Config.BLOCK_SIZE].isWalkable()==false) return true;
+        return false;
+    }
+
+    public boolean crashRight() {
+        if(outOfRightBounds()) return true;
+        if(mb[(y+speed)/Config.BLOCK_SIZE][x/Config.BLOCK_SIZE+1].isWalkable()==false) return true;
+        return false;
+    }
+
     public boolean outOfLeftBounds() {
         return x-speed < 0;
     }
@@ -36,7 +64,25 @@ public class Character {
         return y+speed > Config.WINDOW_HEIGHT-Config.BLOCK_SIZE;
     }
 
-    public void move() {}
+    public void move() {
+        switch(direction) {
+            case 4:
+                if(!outOfUpBounds() && !crashUp()) y -= speed;
+                break;
+            case 1:
+                if(!outOfDownBounds() && !crashDown()) y += speed;
+                break;
+            case 2:
+                if(!outOfLeftBounds() && !crashLeft()) x -= speed;
+                break;
+            case 3:
+                if(!outOfRightBounds() && !crashRight()) x += speed;
+                break;
+        }
+        if(direction != 0 && direction != direction_cur) direction_cur = direction;
+        if(direction != 0) turn = (turn + 1) % 4;
+        direction = 0;
+    }
 
     public int getDirection_cur() {
         return direction_cur;

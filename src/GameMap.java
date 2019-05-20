@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class GameMap {
     private static BufferedImage[][] floor = new BufferedImage[Config.GAME_HEIGHT][Config.GAME_WIDTH];
-    private static BufferedImage[][] block = new BufferedImage[Config.GAME_HEIGHT][Config.GAME_WIDTH];
+    private static MapBlock[][] block = new MapBlock[Config.GAME_HEIGHT][Config.GAME_WIDTH];
 
     private static BufferedImage player1Img;
     static {
@@ -33,25 +33,30 @@ public class GameMap {
 
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
             for(int j=0; j<Config.GAME_WIDTH; j++) {
-                block[i][j] = elementLoader.blockMap.get(GameMapBlock.get(i).get(j));
+                boolean destructible = (GameMapBlock.get(i).get(j).equals("41")
+                        || GameMapBlock.get(i).get(j).equals("42")
+                        || GameMapBlock.get(i).get(j).equals("43"));
+                boolean walkable = (GameMapBlock.get(i).get(j).equals("00"));
+                block[i][j] = new MapBlock(elementLoader.blockImageMap.get(GameMapBlock.get(i).get(j)),
+                        GameMapBlock.get(i).get(j), j, i,
+                        destructible, walkable);
             }
         }
     }
 
 
     public void drawMap(Graphics g) {
-
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
             for(int j=0; j<Config.GAME_WIDTH; j++) {
                 g.drawImage(floor[i][j], j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
                         (j+1)*Config.BLOCK_SIZE, Config.BOARDER+(i+1)*Config.BLOCK_SIZE,
                         0, 0, floor[i][j].getWidth(), floor[i][j].getHeight(), null);
-                g.drawImage(block[i][j], j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
+                g.drawImage(block[i][j].getImage(), j*Config.BLOCK_SIZE, Config.BOARDER+i*Config.BLOCK_SIZE,
                         (j+1)*Config.BLOCK_SIZE, Config.BOARDER+(i+1)*Config.BLOCK_SIZE,
-                        0, 0, block[i][j].getWidth(), block[i][j].getHeight(), null);
-
+                        0, 0, block[i][j].getImage().getWidth(), block[i][j].getImage().getHeight(), null);
             }
         }
+
         int dx1 = player1.getX(), dy1 = Config.BOARDER+player1.getY();
         int dx2 = dx1 + Config.BLOCK_SIZE, dy2 = dy1 + Config.BLOCK_SIZE;
         int sx1 = player1.turn*player1Img.getWidth()/4, sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
@@ -66,5 +71,49 @@ public class GameMap {
 
     public Player getPlayer1() {
         return player1;
+    }
+
+    public static BufferedImage[][] getFloor() {
+        return floor;
+    }
+
+    public static void setFloor(BufferedImage[][] floor) {
+        GameMap.floor = floor;
+    }
+
+    public static MapBlock[][] getBlock() {
+        return block;
+    }
+
+    public static void setBlock(MapBlock[][] block) {
+        GameMap.block = block;
+    }
+
+    public static BufferedImage getPlayer1Img() {
+        return player1Img;
+    }
+
+    public static void setPlayer1Img(BufferedImage player1Img) {
+        GameMap.player1Img = player1Img;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public ElementLoader getElementLoader() {
+        return elementLoader;
+    }
+
+    public void setElementLoader(ElementLoader elementLoader) {
+        this.elementLoader = elementLoader;
+    }
+
+    public List<List<String>> getGameMapBlock() {
+        return GameMapBlock;
+    }
+
+    public void setGameMapBlock(List<List<String>> gameMapBlock) {
+        GameMapBlock = gameMapBlock;
     }
 }

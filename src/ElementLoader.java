@@ -10,12 +10,12 @@ import java.util.Map;
 public class ElementLoader {
     private static ElementLoader elementLoader;
     private static Properties properties;
-    public static Map<String, BufferedImage> blockMap;
+    public static Map<String, BufferedImage> blockImageMap;
 
     private ElementLoader() throws IOException {
         properties = new Properties();
-        blockMap = new HashMap<String, BufferedImage>();
-        initBlockMap();
+        blockImageMap = new HashMap<String, BufferedImage>();
+        initBlockImageMap();
     }
 
     public static ElementLoader getElementLoader() throws IOException {
@@ -25,7 +25,7 @@ public class ElementLoader {
         return elementLoader;
     }
 
-    private static void initBlockMap() throws IOException {
+    private static void initBlockImageMap() throws IOException {
         BufferedImage blueHouse = ImageIO.read(new File("image/bluehouse.png"));
         BufferedImage redHouse = ImageIO.read(new File("image/redhouse.png"));
         BufferedImage yellowHouse = ImageIO.read(new File("image/yellowhouse.png"));
@@ -35,16 +35,17 @@ public class ElementLoader {
         BufferedImage townBush = ImageIO.read(new File("image/townbush.png"));
         BufferedImage townTree = ImageIO.read(new File("image/townTree.png"));
         BufferedImage floor = ImageIO.read(new File("image/floor.png"));
-        blockMap.put("00", floor);
-        blockMap.put("21", blueHouse);
-        blockMap.put("22", redHouse);
-        blockMap.put("23", yellowHouse);
-        blockMap.put("31", townBush);
-        blockMap.put("32", townTree);
-        blockMap.put("41", redBlock);
-        blockMap.put("42", yellowBlock);
-        blockMap.put("43", box);
+        blockImageMap.put("00", floor);
+        blockImageMap.put("21", blueHouse);
+        blockImageMap.put("22", redHouse);
+        blockImageMap.put("23", yellowHouse);
+        blockImageMap.put("31", townBush);
+        blockImageMap.put("32", townTree);
+        blockImageMap.put("41", redBlock);
+        blockImageMap.put("42", yellowBlock);
+        blockImageMap.put("43", box);
     }
+
 
     public static List<List<String>> readBlockInfo() throws IOException {
         List<List<String>> mapList = new ArrayList<>();
