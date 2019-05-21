@@ -21,6 +21,7 @@ public class GameView extends JFrame implements Runnable {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                if(GameMap.getPlayer(1)==null) return;
                 super.keyPressed(e);
                 switch(e.getKeyCode()) {
                     case KeyEvent.VK_UP: gameMap.getPlayer(1).setDirection(4);break;

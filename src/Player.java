@@ -35,6 +35,7 @@ public class Player {
     MapBlock[][] mb = GameMap.getBlock();
 
     public void addBubble() {
+        if(dead) return;
         if(bubbleNum == bubbleNumMax) return;
         Bubble b = new Bubble(x/Config.BLOCK_SIZE, y/Config.BLOCK_SIZE, bubblePower, id);
         bubbleNum++;
@@ -43,6 +44,7 @@ public class Player {
     }
 
     public void pickItem() {
+        if(dead) return;
         for(int i=0; i<GameMap.getItems().size(); i++) {
             if(!GameMap.getItems().get(i).isAlive()) continue;
             if(x/Config.BLOCK_SIZE == GameMap.getItems().get(i).getX()
@@ -106,6 +108,7 @@ public class Player {
     }
 
     public void move() {
+        if(dead) return;
         switch(direction) {
             case 4:
                 if(!outOfUpBounds() && !crashUp()) y -= speed;

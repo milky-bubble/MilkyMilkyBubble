@@ -46,45 +46,117 @@ public class Bubble {
 
     public void bubbleExplode() {
         MapBlock mb[][] = GameMap.getBlock();
+
+        for(int i=1; i<=4; i++) {
+            if(GameMap.getPlayer(i)==null) continue;
+            if(GameMap.getPlayer(i).getX()/Config.BLOCK_SIZE == x
+            && GameMap.getPlayer(i).getY()/Config.BLOCK_SIZE == y) {
+                GameMap.getPlayer(i).setLife(GameMap.getPlayer(i).getLife()-1);
+                if(GameMap.getPlayer(i).getLife()==0) GameMap.removePlayer(i);
+            }
+        }
+
         for(int i=1; i<=power; i++) {
             if(y+i>=Config.GAME_HEIGHT) break;
-            if(!mb[y+i][x].isDestructible()) break;
+            if(!mb[y+i][x].isDestructible() && !mb[y+i][x].isWalkable()) break;
             mb[y+i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y + i, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>50) continue;
-            Item item = new Item(x, y+i, 0, playerId, rand.nextInt(3));
-            GameMap.getItems().add(item);
+            if(rand.nextInt(100)>50) {
+                Item item = new Item(x, y+i, 0, playerId, rand.nextInt(3));
+                GameMap.getItems().add(item);
+            }
+
+            for(int j=1; j<=4; j++) {
+                if(GameMap.getPlayer(j)==null) continue;
+                int px = GameMap.getPlayer(j).getX() / Config.BLOCK_SIZE;
+                int py = GameMap.getPlayer(j).getY() / Config.BLOCK_SIZE;
+                if(px==x && py==y+i) {
+                    GameMap.getPlayer(j).setLife(GameMap.getPlayer(j).getLife()-1);
+                    if(GameMap.getPlayer(j).getLife()==0) {
+                        GameMap.getPlayer(j).setDead(true);
+                        GameMap.removePlayer(j);
+                    }
+                }
+            }
         }
         for(int i=1; i<=power; i++) {
             if(y-i<0) break;
-            if(!mb[y-i][x].isDestructible()) break;
+            if(!mb[y-i][x].isDestructible() && !mb[y-i][x].isWalkable()) break;
             mb[y-i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y - i, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>50) continue;
-            Item item = new Item(x, y-i, 0, playerId, rand.nextInt(3));
-            GameMap.getItems().add(item);
+            if(rand.nextInt(100)>50) {
+                Item item = new Item(x, y-i, 0, playerId, rand.nextInt(3));
+                GameMap.getItems().add(item);
+            }
+
+
+            for(int j=1; j<=4; j++) {
+                if(GameMap.getPlayer(j)==null) continue;
+                int px = GameMap.getPlayer(j).getX() / Config.BLOCK_SIZE;
+                int py = GameMap.getPlayer(j).getY() / Config.BLOCK_SIZE;
+                if(px==x && py==y-i) {
+                    GameMap.getPlayer(j).setLife(GameMap.getPlayer(j).getLife()-1);
+                    if(GameMap.getPlayer(j).getLife()==0) {
+                        GameMap.getPlayer(j).setDead(true);
+                        GameMap.removePlayer(j);
+                    }
+                }
+            }
+
         }
         for(int i=1; i<=power; i++) {
             if(x+i>=Config.GAME_WIDTH) break;
-            if(!mb[y][x+i].isDestructible()) break;
+
+            if(!mb[y][x+i].isDestructible() && !mb[y][x+i].isWalkable()) break;
             mb[y][x+i] = new MapBlock(GameMap.getFloorImg(), "00", x + i, y, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>50) continue;
-            Item item = new Item(x+i, y, 0, playerId, rand.nextInt(3));
-            GameMap.getItems().add(item);
+            if(rand.nextInt(100)>50) {
+                Item item = new Item(x+i, y, 0, playerId, rand.nextInt(3));
+                GameMap.getItems().add(item);
+            }
+
+
+            for(int j=1; j<=4; j++) {
+                if(GameMap.getPlayer(j)==null) continue;
+                int px = GameMap.getPlayer(j).getX() / Config.BLOCK_SIZE;
+                int py = GameMap.getPlayer(j).getY() / Config.BLOCK_SIZE;
+                if(px==x+i && py==y) {
+                    GameMap.getPlayer(j).setLife(GameMap.getPlayer(j).getLife()-1);
+                    if(GameMap.getPlayer(j).getLife()==0) {
+                        GameMap.getPlayer(j).setDead(true);
+                        GameMap.removePlayer(j);
+                    }
+                }
+            }
         }
         for(int i=1; i<=power; i++) {
             if(x-i<0) break;
-            if(!mb[y][x-i].isDestructible()) break;
+            if(!mb[y][x-i].isDestructible() && !mb[y][x-i].isWalkable()) break;
             mb[y][x-i] = new MapBlock(GameMap.getFloorImg(), "00", x-i, y, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>50) continue;
-            Item item = new Item(x-i, y, 0, playerId, rand.nextInt(3));
-            GameMap.getItems().add(item);
+            if(rand.nextInt(100)>50) {
+                Item item = new Item(x-i, y, 0, playerId, rand.nextInt(3));
+                GameMap.getItems().add(item);
+            }
+
+
+            for(int j=1; j<=4; j++) {
+                if(GameMap.getPlayer(j)==null) continue;
+                int px = GameMap.getPlayer(j).getX() / Config.BLOCK_SIZE;
+                int py = GameMap.getPlayer(j).getY() / Config.BLOCK_SIZE;
+                if(px==x-i && py==y) {
+                    GameMap.getPlayer(j).setLife(GameMap.getPlayer(j).getLife()-1);
+                    if(GameMap.getPlayer(j).getLife()==0) {
+                        GameMap.getPlayer(j).setDead(true);
+                        GameMap.removePlayer(j);
+                    }
+                }
+
+            }
         }
     }
 

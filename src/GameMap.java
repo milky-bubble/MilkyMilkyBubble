@@ -84,53 +84,60 @@ public class GameMap {
             bubbles.get(i).drawSelf(g, bubbleImg, bubbleImg.getWidth(), bubbleImg. getHeight());
         }
 
-
-
         int dx1, dx2, dy1, dy2, sx1, sx2, sy1, sy2;
+        if(player1!=null) {
+            dx1 = player1.getX();
+            dy1 = Config.BOARDER+player1.getY();
+            dx2 = dx1 + Config.BLOCK_SIZE;
+            dy2 = dy1 + Config.BLOCK_SIZE;
+            sx1 = player1.turn*player1Img.getWidth()/4;
+            sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
+            sx2 = sx1 + player1Img.getWidth()/4;
+            sy2 = sy1 + player1Img.getHeight()/4;
+            g.drawImage(player1Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        }
 
-        dx1 = player1.getX();
-        dy1 = Config.BOARDER+player1.getY();
-        dx2 = dx1 + Config.BLOCK_SIZE;
-        dy2 = dy1 + Config.BLOCK_SIZE;
-        sx1 = player1.turn*player1Img.getWidth()/4;
-        sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
-        sx2 = sx1 + player1Img.getWidth()/4;
-        sy2 = sy1 + player1Img.getHeight()/4;
-        if(!player1.isDead()) g.drawImage(player1Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(player2!=null) {
+            dx1 = player2.getX();
+            dy1 = Config.BOARDER+player2.getY();
+            dx2 = dx1 + Config.BLOCK_SIZE;
+            dy2 = dy1 + Config.BLOCK_SIZE;
+            sx1 = player2.turn*player2Img.getWidth()/4;
+            sy1 = (player2.direction_cur-1)*player2Img.getHeight()/4;
+            sx2 = sx1 + player2Img.getWidth()/4;
+            sy2 = sy1 + player2Img.getHeight()/4;
+            g.drawImage(player2Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
-        dx1 = player2.getX();
-        dy1 = Config.BOARDER+player2.getY();
-        dx2 = dx1 + Config.BLOCK_SIZE;
-        dy2 = dy1 + Config.BLOCK_SIZE;
-        sx1 = player2.turn*player2Img.getWidth()/4;
-        sy1 = (player2.direction_cur-1)*player2Img.getHeight()/4;
-        sx2 = sx1 + player2Img.getWidth()/4;
-        sy2 = sy1 + player2Img.getHeight()/4;
-        if(!player2.isDead()) g.drawImage(player2Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        }
 
-        dx1 = player3.getX();
-        dy1 = Config.BOARDER+player3.getY();
-        dx2 = dx1 + Config.BLOCK_SIZE;
-        dy2 = dy1 + Config.BLOCK_SIZE;
-        sx1 = player3.turn*player3Img.getWidth()/4;
-        sy1 = (player3.direction_cur-1)*player3Img.getHeight()/4;
-        sx2 = sx1 + player3Img.getWidth()/4;
-        sy2 = sy1 + player3Img.getHeight()/4;
-        if(!player3.isDead()) g.drawImage(player3Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(player3!=null) {
+            dx1 = player3.getX();
+            dy1 = Config.BOARDER+player3.getY();
+            dx2 = dx1 + Config.BLOCK_SIZE;
+            dy2 = dy1 + Config.BLOCK_SIZE;
+            sx1 = player3.turn*player3Img.getWidth()/4;
+            sy1 = (player3.direction_cur-1)*player3Img.getHeight()/4;
+            sx2 = sx1 + player3Img.getWidth()/4;
+            sy2 = sy1 + player3Img.getHeight()/4;
+            g.drawImage(player3Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        }
 
-        dx1 = player4.getX();
-        dy1 = Config.BOARDER+player4.getY();
-        dx2 = dx1 + Config.BLOCK_SIZE;
-        dy2 = dy1 + Config.BLOCK_SIZE;
-        sx1 = player4.turn*player4Img.getWidth()/4;
-        sy1 = (player4.direction_cur-1)*player4Img.getHeight()/4;
-        sx2 = sx1 + player4Img.getWidth()/4;
-        sy2 = sy1 + player4Img.getHeight()/4;
-        if(!player4.isDead()) g.drawImage(player4Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(player4!=null) {
+            dx1 = player4.getX();
+            dy1 = Config.BOARDER+player4.getY();
+            dx2 = dx1 + Config.BLOCK_SIZE;
+            dy2 = dy1 + Config.BLOCK_SIZE;
+            sx1 = player4.turn*player4Img.getWidth()/4;
+            sy1 = (player4.direction_cur-1)*player4Img.getHeight()/4;
+            sx2 = sx1 + player4Img.getWidth()/4;
+            sy2 = sy1 + player4Img.getHeight()/4;
+            if(player4!=null) g.drawImage(player4Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        }
+
     }
 
     public void update() {
-        player1.move();
+        if(player1 != null) player1.move();
     }
 
 
@@ -170,6 +177,15 @@ public class GameMap {
             case 3: return player3;
             case 4: return player4;
             default: return null;
+        }
+    }
+
+    public static void removePlayer(int id) {
+        switch(id) {
+            case 1: player1 = null; break;
+            case 2: player2 = null; break;
+            case 3: player3 = null; break;
+            case 4: player4 = null; break;
         }
     }
 }
