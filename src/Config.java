@@ -8,4 +8,5 @@ public class Config {
     public static final int GAME_HEIGHT = WINDOW_HEIGHT / BLOCK_SIZE;
     public static final int BUBBLEMAX = 5;
     public static final int POWERMAX = 3;
+    public static final int LIFEMAX = 3;
 }

@@ -52,8 +52,10 @@ public class ElementLoader {
     private static void initItemImageMap() throws IOException {
         BufferedImage powerGiftImg = ImageIO.read(new File("image/powergift.png"));
         BufferedImage bubbleNumGiftImg = ImageIO.read(new File("image/bubblenumgift.png"));
+        BufferedImage lifeCardGiftImg = ImageIO.read(new File("image/lifecardgift.png"));
         itemImageMap.put(0, powerGiftImg);
         itemImageMap.put(1, bubbleNumGiftImg);
+        itemImageMap.put(2, lifeCardGiftImg);
     }
 
     public static List<List<String>> readBlockInfo() throws IOException {

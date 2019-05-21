@@ -29,6 +29,9 @@ public class Item {
                 if(player.getBubbleNumMax()<Config.BUBBLEMAX)
                     player.setBubbleNumMax(player.getBubbleNumMax()+1);
                 break;
+            case 2:
+                if(player.getLife()<Config.LIFEMAX)
+                    player.setLife(player.getLife()+1);
         }
     }
 

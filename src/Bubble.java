@@ -52,18 +52,18 @@ public class Bubble {
             mb[y+i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y + i, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>5) continue;
-            Item item = new Item(x, y+i, 0, playerId, rand.nextInt(2));
+            if(rand.nextInt(100)>50) continue;
+            Item item = new Item(x, y+i, 0, playerId, rand.nextInt(3));
             GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
             if(y-i<0) break;
             if(!mb[y-i][x].isDestructible()) break;
-            mb[y-i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y - 1, false, true);
+            mb[y-i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y - i, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>5) continue;
-            Item item = new Item(x, y-i, 0, playerId, rand.nextInt(2));
+            if(rand.nextInt(100)>50) continue;
+            Item item = new Item(x, y-i, 0, playerId, rand.nextInt(3));
             GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
@@ -72,8 +72,8 @@ public class Bubble {
             mb[y][x+i] = new MapBlock(GameMap.getFloorImg(), "00", x + i, y, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>5) continue;
-            Item item = new Item(x+i, y, 0, playerId, rand.nextInt(2));
+            if(rand.nextInt(100)>50) continue;
+            Item item = new Item(x+i, y, 0, playerId, rand.nextInt(3));
             GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
@@ -82,8 +82,8 @@ public class Bubble {
             mb[y][x-i] = new MapBlock(GameMap.getFloorImg(), "00", x-i, y, false, true);
 
             Random rand = new Random();
-            if(rand.nextInt(100)>5) continue;
-            Item item = new Item(x-i, y, 0, playerId, rand.nextInt(2));
+            if(rand.nextInt(100)>50) continue;
+            Item item = new Item(x-i, y, 0, playerId, rand.nextInt(3));
             GameMap.getItems().add(item);
         }
     }

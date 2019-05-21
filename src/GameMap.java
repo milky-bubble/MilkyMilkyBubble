@@ -96,7 +96,7 @@ public class GameMap {
         sy1 = (player1.direction_cur-1)*player1Img.getHeight()/4;
         sx2 = sx1 + player1Img.getWidth()/4;
         sy2 = sy1 + player1Img.getHeight()/4;
-        g.drawImage(player1Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(!player1.isDead()) g.drawImage(player1Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
         dx1 = player2.getX();
         dy1 = Config.BOARDER+player2.getY();
@@ -106,7 +106,7 @@ public class GameMap {
         sy1 = (player2.direction_cur-1)*player2Img.getHeight()/4;
         sx2 = sx1 + player2Img.getWidth()/4;
         sy2 = sy1 + player2Img.getHeight()/4;
-        g.drawImage(player2Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(!player2.isDead()) g.drawImage(player2Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
         dx1 = player3.getX();
         dy1 = Config.BOARDER+player3.getY();
@@ -116,7 +116,7 @@ public class GameMap {
         sy1 = (player3.direction_cur-1)*player3Img.getHeight()/4;
         sx2 = sx1 + player3Img.getWidth()/4;
         sy2 = sy1 + player3Img.getHeight()/4;
-        g.drawImage(player3Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(!player3.isDead()) g.drawImage(player3Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
         dx1 = player4.getX();
         dy1 = Config.BOARDER+player4.getY();
@@ -126,7 +126,7 @@ public class GameMap {
         sy1 = (player4.direction_cur-1)*player4Img.getHeight()/4;
         sx2 = sx1 + player4Img.getWidth()/4;
         sy2 = sy1 + player4Img.getHeight()/4;
-        g.drawImage(player4Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+        if(!player4.isDead()) g.drawImage(player4Img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
 
     public void update() {

@@ -14,6 +14,7 @@ public class Player {
     protected int bubbleNum;
     protected int bubblePower;
     protected int bubbleNumMax;
+    protected int life;
 
     public Player(int x, int y, int id, BufferedImage image, int direction) {
         this.x = x;
@@ -28,6 +29,7 @@ public class Player {
         this.bubbleNum = 0;
         this.bubbleNumMax = 1;
         this.bubblePower = 1;
+        this.life = 1;
     }
 
     MapBlock[][] mb = GameMap.getBlock();
@@ -227,4 +229,13 @@ public class Player {
     public void setMb(MapBlock[][] mb) {
         this.mb = mb;
     }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
 }
