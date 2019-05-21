@@ -47,7 +47,7 @@ public class Bubble {
     public void bubbleExplode() {
         MapBlock mb[][] = GameMap.getBlock();
         for(int i=1; i<=power; i++) {
-            if(y+i>Config.GAME_HEIGHT) break;
+            if(y+i>=Config.GAME_HEIGHT) break;
             if(!mb[y+i][x].isDestructible()) break;
             mb[y+i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y + i, false, true);
 
@@ -67,7 +67,7 @@ public class Bubble {
             GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
-            if(x+i>Config.GAME_WIDTH) break;
+            if(x+i>=Config.GAME_WIDTH) break;
             if(!mb[y][x+i].isDestructible()) break;
             mb[y][x+i] = new MapBlock(GameMap.getFloorImg(), "00", x + i, y, false, true);
 
