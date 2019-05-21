@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,21 +50,41 @@ public class Bubble {
             if(y+i>Config.GAME_HEIGHT) break;
             if(!mb[y+i][x].isDestructible()) break;
             mb[y+i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y + i, false, true);
+
+            Random rand = new Random();
+            if(rand.nextInt(100)>5) continue;
+            Item item = new Item(x, y+i, 0, playerId, rand.nextInt(2));
+            GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
             if(y-i<0) break;
             if(!mb[y-i][x].isDestructible()) break;
             mb[y-i][x] = new MapBlock(GameMap.getFloorImg(), "00", x, y - 1, false, true);
+
+            Random rand = new Random();
+            if(rand.nextInt(100)>5) continue;
+            Item item = new Item(x, y-i, 0, playerId, rand.nextInt(2));
+            GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
             if(x+i>Config.GAME_WIDTH) break;
             if(!mb[y][x+i].isDestructible()) break;
             mb[y][x+i] = new MapBlock(GameMap.getFloorImg(), "00", x + i, y, false, true);
+
+            Random rand = new Random();
+            if(rand.nextInt(100)>5) continue;
+            Item item = new Item(x+i, y, 0, playerId, rand.nextInt(2));
+            GameMap.getItems().add(item);
         }
         for(int i=1; i<=power; i++) {
             if(x-i<0) break;
             if(!mb[y][x-i].isDestructible()) break;
             mb[y][x-i] = new MapBlock(GameMap.getFloorImg(), "00", x-i, y, false, true);
+
+            Random rand = new Random();
+            if(rand.nextInt(100)>5) continue;
+            Item item = new Item(x-i, y, 0, playerId, rand.nextInt(2));
+            GameMap.getItems().add(item);
         }
     }
 

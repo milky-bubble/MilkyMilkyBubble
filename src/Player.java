@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 
 public class Player {
     protected int x, y;
@@ -25,7 +26,7 @@ public class Player {
         this.turn = 0;
         this.direction_cur = 1;
         this.bubbleNum = 0;
-        this.bubbleNumMax = 3;
+        this.bubbleNumMax = 1;
         this.bubblePower = 1;
     }
 
@@ -37,6 +38,17 @@ public class Player {
         bubbleNum++;
         GameMap.getBubbles().add(b);
         b.lastForCertainTime();
+    }
+
+    public void pickItem() {
+        for(int i=0; i<GameMap.getItems().size(); i++) {
+            if(!GameMap.getItems().get(i).isAlive()) continue;
+            if(x/Config.BLOCK_SIZE == GameMap.getItems().get(i).getX()
+            && y/Config.BLOCK_SIZE == GameMap.getItems().get(i).getY()) {
+                GameMap.getItems().get(i).setAlive(false);
+                GameMap.getItems().get(i).pickedUp(id);
+            }
+        }
     }
 
     public boolean crashDown() {
@@ -109,6 +121,7 @@ public class Player {
         if(direction != 0 && direction != direction_cur) direction_cur = direction;
         if(direction != 0) turn = (turn + 1) % 4;
         direction = 0;
+        pickItem();
     }
 
     public int getDirection_cur() {

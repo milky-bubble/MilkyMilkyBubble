@@ -11,11 +11,14 @@ public class ElementLoader {
     private static ElementLoader elementLoader;
     private static Properties properties;
     public static Map<String, BufferedImage> blockImageMap;
+    public static Map<Integer, BufferedImage> itemImageMap;
 
     private ElementLoader() throws IOException {
         properties = new Properties();
         blockImageMap = new HashMap<String, BufferedImage>();
+        itemImageMap = new HashMap<Integer, BufferedImage>();
         initBlockImageMap();
+        initItemImageMap();
     }
 
     public static ElementLoader getElementLoader() throws IOException {
@@ -46,6 +49,12 @@ public class ElementLoader {
         blockImageMap.put("43", box);
     }
 
+    private static void initItemImageMap() throws IOException {
+        BufferedImage powerGiftImg = ImageIO.read(new File("image/powergift.png"));
+        BufferedImage bubbleNumGiftImg = ImageIO.read(new File("image/bubblenumgift.png"));
+        itemImageMap.put(0, powerGiftImg);
+        itemImageMap.put(1, bubbleNumGiftImg);
+    }
 
     public static List<List<String>> readBlockInfo() throws IOException {
         List<List<String>> mapList = new ArrayList<>();

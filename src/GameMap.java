@@ -16,6 +16,7 @@ public class GameMap {
     private static BufferedImage bubbleImg;
     private static BufferedImage floorImg;
 
+
     static {
         try {
             player1Img = ImageIO.read(new File("image/player1.png"));
@@ -32,6 +33,7 @@ public class GameMap {
     private static BufferedImage[][] floor = new BufferedImage[Config.GAME_HEIGHT][Config.GAME_WIDTH];
     private static MapBlock[][] block = new MapBlock[Config.GAME_HEIGHT][Config.GAME_WIDTH];
     private static ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+    private static ArrayList<Item> items = new ArrayList<Item>();
     private static Player player1 = new Player(0, 0, 1, player1Img, 0);
     private static Player player2 = new Player((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, 0, 2, player2Img, 0);
     private static Player player3 = new Player(0, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, 3, player3Img, 0);
@@ -73,9 +75,16 @@ public class GameMap {
             }
         }
 
+
+        for(int i=0; i<items.size(); i++) {
+            BufferedImage image = elementLoader.itemImageMap.get(items.get(i).getCategory());
+            items.get(i).drawSelf(g, image, image.getWidth(), image.getHeight());
+        }
         for(int i=0; i<bubbles.size(); i++) {
             bubbles.get(i).drawSelf(g, bubbleImg, bubbleImg.getWidth(), bubbleImg. getHeight());
         }
+
+
 
         int dx1, dx2, dy1, dy2, sx1, sx2, sy1, sy2;
 
@@ -144,6 +153,14 @@ public class GameMap {
 
     public static void setFloorImg(BufferedImage floorImg) {
         GameMap.floorImg = floorImg;
+    }
+
+    public static ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public static void setItems(ArrayList<Item> items) {
+        GameMap.items = items;
     }
 
     public static Player getPlayer(int id) {
