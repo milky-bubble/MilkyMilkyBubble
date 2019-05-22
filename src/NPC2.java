@@ -16,7 +16,7 @@ public class NPC2 extends Character {
          * if need to add bubble, just use function addBubble();
          */
 
-        // Here is an example, one step down and put one bubble
+        // Here is an example, one step right and put one bubble
         // NPC1 can only put one bubble at first
         // So only after the bubble explode can he puts another one
         addBubble();
