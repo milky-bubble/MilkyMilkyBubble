@@ -10,16 +10,16 @@ public class Player extends Character {
         if(dead) return;
         switch(direction) {
             case 4:
-                if(!outOfUpBounds() && !crashUp()) y -= speed;
+                if(!crashUp()) y -= 1;
                 break;
             case 1:
-                if(!outOfDownBounds() && !crashDown()) y += speed;
+                if(!crashDown()) y += 1;
                 break;
             case 2:
-                if(!outOfLeftBounds() && !crashLeft()) x -= speed;
+                if(!crashLeft()) x -= 1;
                 break;
             case 3:
-                if(!outOfRightBounds() && !crashRight()) x += speed;
+                if(!crashRight()) x += 1;
                 break;
         }
         if(direction != 0 && direction != direction_cur) direction_cur = direction;

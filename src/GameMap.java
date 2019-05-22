@@ -21,10 +21,10 @@ public class GameMap {
     private static MapBlock[][] block = new MapBlock[Config.GAME_HEIGHT][Config.GAME_WIDTH];
     private static ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
     private static ArrayList<Item> items = new ArrayList<Item>();
-    private static Character player1 = new Player(0, 0, 1, elementLoader.playerImageMap.get(1), 0);
-    private static Character player2 = new NPC1((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, 0, 2, elementLoader.playerImageMap.get(2), 0);
-    private static Character player3 = new NPC2(0, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, 3, elementLoader.playerImageMap.get(3), 0);
-    private static Character player4 = new NPC3((Config.GAME_WIDTH-1)*Config.BLOCK_SIZE, (Config.GAME_HEIGHT-1)*Config.BLOCK_SIZE, 4, elementLoader.playerImageMap.get(4), 0);
+    private static Character player1 = new Player(0, 0, 1, ElementLoader.playerImageMap.get(1), 0);
+    private static Character player2 = new NPC1(Config.GAME_WIDTH-1, 0, 2, ElementLoader.playerImageMap.get(2), 0);
+    private static Character player3 = new NPC2(0, Config.GAME_HEIGHT-1, 3, ElementLoader.playerImageMap.get(3), 0);
+    private static Character player4 = new NPC3(Config.GAME_WIDTH-1, Config.GAME_HEIGHT-1, 4, ElementLoader.playerImageMap.get(4), 0);
 
 
     // Init Game Elements

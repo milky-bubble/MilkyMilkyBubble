@@ -34,8 +34,8 @@ public class Character {
 
     public void drawSelf(Graphics g, int id) {
         BufferedImage image = ElementLoader.playerImageMap.get(id);
-        int dx1 = x;
-        int dy1 = Config.BOARDER + y;
+        int dx1 = x * Config.BLOCK_SIZE;
+        int dy1 = Config.BOARDER + y*Config.BLOCK_SIZE;
         int dx2 = dx1 + Config.BLOCK_SIZE;
         int dy2 = dy1 + Config.BLOCK_SIZE;
         int sx1 = turn * image.getWidth() / 4;
@@ -48,7 +48,7 @@ public class Character {
     public void addBubble() {
         if(dead) return;
         if(bubbleNum == bubbleNumMax) return;
-        Bubble b = new Bubble(x/Config.BLOCK_SIZE, y/Config.BLOCK_SIZE, bubblePower, id);
+        Bubble b = new Bubble(x, y, bubblePower, id);
         bubbleNum++;
         GameMap.getBubbles().add(b);
         b.lastForCertainTime();
@@ -58,8 +58,8 @@ public class Character {
         if(dead) return;
         for(int i=0; i<GameMap.getItems().size(); i++) {
             if(!GameMap.getItems().get(i).isAlive()) continue;
-            if(x/Config.BLOCK_SIZE == GameMap.getItems().get(i).getX()
-            && y/Config.BLOCK_SIZE == GameMap.getItems().get(i).getY()) {
+            if(x == GameMap.getItems().get(i).getX()
+            && y == GameMap.getItems().get(i).getY()) {
                 GameMap.getItems().get(i).setAlive(false);
                 GameMap.getItems().get(i).pickedUp(id);
             }
@@ -67,66 +67,30 @@ public class Character {
     }
 
     public boolean crashDown() {
-        if(outOfDownBounds()) return true;
-        int ax = (int)Math.ceil((double)(y+speed)/Config.BLOCK_SIZE);
-        int ay1 = (int)Math.floor((double)x/Config.BLOCK_SIZE);
-        int ay2 = (int)Math.ceil((double)x/Config.BLOCK_SIZE);
-        if(mb[ax][ay1].isWalkable()==false || mb[ax][ay2].isWalkable()==false) return true;
+        if(y+1>=Config.GAME_HEIGHT) return true;
+        if(!mb[y+1][x].isWalkable()) return true;
         return false;
     }
 
     public boolean crashUp() {
-        if(outOfUpBounds()) return true;
-        int ax = (int)Math.floor((double)(y-speed)/Config.BLOCK_SIZE);
-        int ay1 = (int)Math.floor((double)x/Config.BLOCK_SIZE);
-        int ay2 = (int)Math.ceil((double)x/Config.BLOCK_SIZE);
-        if(mb[ax][ay1].isWalkable()==false || mb[ax][ay2].isWalkable()==false) return true;
+        if(y-1<0)return true;
+        if(!mb[y-1][x].isWalkable()) return true;
         return false;
     }
 
     public boolean crashLeft() {
-        if(outOfLeftBounds()) return true;
-        int ax1 = (int)Math.floor((double)y/Config.BLOCK_SIZE);
-        int ax2 = (int)Math.ceil((double)y/Config.BLOCK_SIZE);
-        int ay = (int)Math.floor((double)(x-speed)/Config.BLOCK_SIZE);
-        if(mb[ax1][ay].isWalkable()==false || mb[ax2][ay].isWalkable()==false) return true;
+        if(x-1<0)return true;
+        if(!mb[y][x-1].isWalkable()) return true;
         return false;
     }
 
     public boolean crashRight() {
-        if(outOfRightBounds()) return true;
-        int ax1 = (int)Math.ceil((double)y/Config.BLOCK_SIZE);
-        int ax2 = (int)Math.floor((double)y/Config.BLOCK_SIZE);
-        int ay = (int)Math.ceil((double)(x+speed)/Config.BLOCK_SIZE);
-        if(mb[ax1][ay].isWalkable()==false || mb[ax2][ay].isWalkable()==false) return true;
+        if(x+1>=Config.GAME_WIDTH) return true;
+        if(!mb[y][x+1].isWalkable()) return true;
         return false;
     }
 
-    public boolean outOfLeftBounds() {
-        return x-speed < 0;
-    }
-
-    public boolean outOfRightBounds() {
-        return x+speed > Config.WINDOW_WIDTH-Config.BLOCK_SIZE;
-    }
-
-    public boolean outOfUpBounds() {
-        return y-speed < 0;
-    }
-
-    public boolean outOfDownBounds() {
-        return y+speed > Config.WINDOW_HEIGHT-Config.BLOCK_SIZE;
-    }
-
     public void move() {}
-
-    public int getDirection_cur() {
-        return direction_cur;
-    }
-
-    public void setDirection_cur(int direction_cur) {
-        this.direction_cur = direction_cur;
-    }
 
     public void setDirection(int direction) {
         this.direction = direction;
@@ -156,41 +120,11 @@ public class Character {
         this.image = image;
     }
 
-    public boolean isDead() {
-        return dead;
-    }
 
     public void setDead(boolean dead) {
         this.dead = dead;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public int getTurn() {
-        return turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getBubbleNum() {
         return bubbleNum;
