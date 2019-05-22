@@ -12,13 +12,19 @@ public class ElementLoader {
     private static Properties properties;
     public static Map<String, BufferedImage> blockImageMap;
     public static Map<Integer, BufferedImage> itemImageMap;
+    public static Map<Integer, BufferedImage> playerImageMap;
+    public static Map<String, BufferedImage> bubbleImageMap;
 
     private ElementLoader() throws IOException {
         properties = new Properties();
         blockImageMap = new HashMap<String, BufferedImage>();
         itemImageMap = new HashMap<Integer, BufferedImage>();
+        playerImageMap = new HashMap<Integer, BufferedImage>();
+        bubbleImageMap = new HashMap<String, BufferedImage>();
         initBlockImageMap();
         initItemImageMap();
+        initPlayerImageMap();
+        initBubbleImageMap();
     }
 
     public static ElementLoader getElementLoader() throws IOException {
@@ -29,15 +35,15 @@ public class ElementLoader {
     }
 
     private static void initBlockImageMap() throws IOException {
-        BufferedImage blueHouse = ImageIO.read(new File("image/bluehouse.png"));
-        BufferedImage redHouse = ImageIO.read(new File("image/redhouse.png"));
-        BufferedImage yellowHouse = ImageIO.read(new File("image/yellowhouse.png"));
-        BufferedImage redBlock = ImageIO.read(new File("image/redblock.png"));
-        BufferedImage yellowBlock = ImageIO.read(new File("image/yellowblock.png"));
-        BufferedImage box = ImageIO.read(new File("image/box.png"));
-        BufferedImage townBush = ImageIO.read(new File("image/townbush.png"));
-        BufferedImage townTree = ImageIO.read(new File("image/townTree.png"));
-        BufferedImage floor = ImageIO.read(new File("image/floor.png"));
+        BufferedImage blueHouse = ImageIO.read(new File("image/map/bluehouse.png"));
+        BufferedImage redHouse = ImageIO.read(new File("image/map/redhouse.png"));
+        BufferedImage yellowHouse = ImageIO.read(new File("image/map/yellowhouse.png"));
+        BufferedImage redBlock = ImageIO.read(new File("image/map/redblock.png"));
+        BufferedImage yellowBlock = ImageIO.read(new File("image/map/yellowblock.png"));
+        BufferedImage box = ImageIO.read(new File("image/map/box.png"));
+        BufferedImage townBush = ImageIO.read(new File("image/map/townbush.png"));
+        BufferedImage townTree = ImageIO.read(new File("image/map/townTree.png"));
+        BufferedImage floor = ImageIO.read(new File("image/map/floor.png"));
         blockImageMap.put("00", floor);
         blockImageMap.put("21", blueHouse);
         blockImageMap.put("22", redHouse);
@@ -50,12 +56,28 @@ public class ElementLoader {
     }
 
     private static void initItemImageMap() throws IOException {
-        BufferedImage powerGiftImg = ImageIO.read(new File("image/powergift.png"));
-        BufferedImage bubbleNumGiftImg = ImageIO.read(new File("image/bubblenumgift.png"));
-        BufferedImage lifeCardGiftImg = ImageIO.read(new File("image/lifecardgift.png"));
+        BufferedImage powerGiftImg = ImageIO.read(new File("image/item/powergift.png"));
+        BufferedImage bubbleNumGiftImg = ImageIO.read(new File("image/item/bubblenumgift.png"));
+        BufferedImage lifeCardGiftImg = ImageIO.read(new File("image/item/lifecardgift.png"));
         itemImageMap.put(0, powerGiftImg);
         itemImageMap.put(1, bubbleNumGiftImg);
         itemImageMap.put(2, lifeCardGiftImg);
+    }
+
+    private static void initPlayerImageMap() throws IOException {
+        BufferedImage player1Img = ImageIO.read(new File("image/player/player1.png"));
+        BufferedImage player2Img = ImageIO.read(new File("image/player/player2.png"));
+        BufferedImage player3Img = ImageIO.read(new File("image/player/player3.png"));
+        BufferedImage player4Img = ImageIO.read(new File("image/player/player4.png"));
+        playerImageMap.put(1, player1Img);
+        playerImageMap.put(2, player2Img);
+        playerImageMap.put(3, player3Img);
+        playerImageMap.put(4, player4Img);
+    }
+
+    private static void initBubbleImageMap() throws IOException {
+        BufferedImage bubbleImg = ImageIO.read(new File("image/bubble/bubble.png"));
+        bubbleImageMap.put("bubble", bubbleImg);
     }
 
     public static List<List<String>> readBlockInfo() throws IOException {

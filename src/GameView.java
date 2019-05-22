@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.io.ObjectInputFilter;
 
 import static java.lang.Thread.sleep;
 
@@ -12,7 +12,7 @@ public class GameView extends JFrame implements Runnable {
     private Image offScreenImage = null;
 
     public GameView() throws IOException {
-        this.setSize(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+Config.BOARDER);
+        this.setSize(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
         this.setTitle("Milky Milky Bubble");
         this.setVisible(true);
         this.setResizable(false);
@@ -44,7 +44,7 @@ public class GameView extends JFrame implements Runnable {
         while(true) {
             gameMap.update();
 
-            offScreenImage = this.createImage(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT+Config.BOARDER);
+            offScreenImage = this.createImage(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
             Graphics gOff = offScreenImage.getGraphics();
             gameMap.drawMap(gOff);
             repaint();
