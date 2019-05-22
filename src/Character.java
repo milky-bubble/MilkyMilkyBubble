@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Iterator;
 
 public class Character {
     protected int x, y;
@@ -90,78 +89,55 @@ public class Character {
         return false;
     }
 
+
     public void move() {}
 
+    // Getters and Setters
     public void setDirection(int direction) {
         this.direction = direction;
     }
-
     public int getX() {
         return x;
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
     }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public BufferedImage getImage() {
         return image;
     }
-
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-
-
     public void setDead(boolean dead) {
         this.dead = dead;
     }
-
-
     public int getBubbleNum() {
         return bubbleNum;
     }
-
     public void setBubbleNum(int bubbleNum) {
         this.bubbleNum = bubbleNum;
     }
-
     public int getBubblePower() {
         return bubblePower;
     }
-
     public void setBubblePower(int bubblePower) {
         this.bubblePower = bubblePower;
     }
-
     public int getBubbleNumMax() {
         return bubbleNumMax;
     }
-
     public void setBubbleNumMax(int bubbleNumMax) {
         this.bubbleNumMax = bubbleNumMax;
     }
-
     public MapBlock[][] getMb() {
         return mb;
     }
-
     public void setMb(MapBlock[][] mb) {
         this.mb = mb;
     }
-
     public int getLife() {
         return life;
     }
-
     public void setLife(int life) {
         this.life = life;
     }

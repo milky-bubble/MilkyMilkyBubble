@@ -42,7 +42,7 @@ public class GameMap {
                         || GameMapBlock.get(i).get(j).equals("42")
                         || GameMapBlock.get(i).get(j).equals("43"));
                 boolean walkable = (GameMapBlock.get(i).get(j).equals("00"));
-                block[i][j] = new MapBlock(elementLoader.blockImageMap.get(GameMapBlock.get(i).get(j)),
+                block[i][j] = new MapBlock(ElementLoader.blockImageMap.get(GameMapBlock.get(i).get(j)),
                         GameMapBlock.get(i).get(j), j, i,
                         destructible, walkable);
             }

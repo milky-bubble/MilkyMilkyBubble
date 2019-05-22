@@ -11,14 +11,6 @@ public class Bubble {
     private int playerId;
     private boolean alive;
 
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
     public Bubble(int x, int y, int power, int playerId) {
         this.x = x;
         this.y = y;
@@ -33,7 +25,7 @@ public class Bubble {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                setAlive(false);
+                alive = false;
                 Character cur = GameMap.getPlayer(playerId);
                 cur.setBubbleNum(cur.getBubbleNum()-1);
                 bubbleExplode();
@@ -183,5 +175,8 @@ public class Bubble {
         turn = ((turn + 1) % 27);
         g.drawImage(bubbleImg, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
+
+    // Getters
+    public boolean isAlive() { return alive; }
 
 }
