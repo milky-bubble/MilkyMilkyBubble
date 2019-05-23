@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.font.ImageGraphicAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class ElementLoader {
     public static Map<Integer, BufferedImage> itemImageMap;
     public static Map<Integer, BufferedImage> playerImageMap;
     public static Map<String, BufferedImage> bubbleImageMap;
+    public static Map<String, ImageIcon> gameImageMap;
 
     private ElementLoader() throws IOException {
         properties = new Properties();
@@ -21,10 +23,12 @@ public class ElementLoader {
         itemImageMap = new HashMap<Integer, BufferedImage>();
         playerImageMap = new HashMap<Integer, BufferedImage>();
         bubbleImageMap = new HashMap<String, BufferedImage>();
+        gameImageMap = new HashMap<String, ImageIcon>();
         initBlockImageMap();
         initItemImageMap();
         initPlayerImageMap();
         initBubbleImageMap();
+        initGameImageMap();
     }
 
     public static ElementLoader getElementLoader() throws IOException {
@@ -78,6 +82,15 @@ public class ElementLoader {
     private static void initBubbleImageMap() throws IOException {
         BufferedImage bubbleImg = ImageIO.read(new File("image/bubble/bubble.png"));
         bubbleImageMap.put("bubble", bubbleImg);
+    }
+
+    private static void initGameImageMap() throws IOException {
+        ImageIcon iconImg = new ImageIcon("image/game/icon.jpg");
+        ImageIcon beginBackgroundImg = new ImageIcon("image/game/beginbackground.png");
+        ImageIcon beginButtonImg = new ImageIcon("image/game/beginbutton.png");
+        gameImageMap.put("icon", iconImg);
+        gameImageMap.put("beginbackgroung", beginBackgroundImg);
+        gameImageMap.put("beginbutton", beginButtonImg);
     }
 
     public static List<List<String>> readBlockInfo() throws IOException {

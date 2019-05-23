@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Character {
     protected int x, y;
@@ -44,12 +46,26 @@ public class Character {
         g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
 
+//    public void drawSelfWalkingProcess(Graphics g, int id) {
+//        BufferedImage image = ElementLoader.playerImageMap.get(id);
+//        int dx1 = x * Config.BLOCK_SIZE;
+//        int dy1 = Config.BOARDER + y*Config.BLOCK_SIZE;
+//        int dx2 = dx1 + Config.BLOCK_SIZE;
+//        int dy2 = dy1 + Config.BLOCK_SIZE;
+//        int sx1 = turn * image.getWidth() / 4;
+//        int sy1 = (direction_cur - 1) * image.getHeight()/4;
+//        int sx2 = sx1 + image.getWidth() / 4;
+//        int sy2 = sy1 + image.getHeight()/4;
+//        g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+//    }
+
     public void addBubble() {
         if(dead) return;
         if(bubbleNum == bubbleNumMax) return;
         Bubble b = new Bubble(x, y, bubblePower, id);
         bubbleNum++;
         GameMap.getBubbles().add(b);
+        mb[y][x].setWalkable(false);
         b.lastForCertainTime();
     }
 

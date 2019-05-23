@@ -29,6 +29,7 @@ public class Bubble {
                 Character cur = GameMap.getPlayer(playerId);
                 cur.setBubbleNum(cur.getBubbleNum()-1);
                 bubbleExplode();
+                GameMap.getBlock()[y][x].setWalkable(true);
                 System.gc();
             }
         };
@@ -51,15 +52,19 @@ public class Bubble {
         // Down
         for(int i=1; i<=power; i++) {
             // Block Into Floor
+
             if(y+i>=Config.GAME_HEIGHT) break;
             if(!mb[y+i][x].isDestructible() && !mb[y+i][x].isWalkable()) break;
-            mb[y+i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y + i, false, true);
 
-            // Random Items
-            Random rand = new Random();
-            if(rand.nextInt(100)>50) {
-                Item item = new Item(x, y+i, 0, rand.nextInt(3));
-                GameMap.getItems().add(item);
+            if(i==1) {
+                mb[y+i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y + i, false, true);
+
+                // Random Items
+                Random rand = new Random();
+                if(rand.nextInt(100)>50) {
+                    Item item = new Item(x, y+i, 0, rand.nextInt(3));
+                    GameMap.getItems().add(item);
+                }
             }
 
             // Kill Players
@@ -81,14 +86,18 @@ public class Bubble {
             // Bloc Into Floor
             if(y-i<0) break;
             if(!mb[y-i][x].isDestructible() && !mb[y-i][x].isWalkable()) break;
-            mb[y-i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y - i, false, true);
 
-            // Random Items
-            Random rand = new Random();
-            if(rand.nextInt(100)>50) {
-                Item item = new Item(x, y-i, 0, rand.nextInt(3));
-                GameMap.getItems().add(item);
+            if(i==1) {
+                mb[y-i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y - i, false, true);
+
+                // Random Items
+                Random rand = new Random();
+                if(rand.nextInt(100)>50) {
+                    Item item = new Item(x, y-i, 0, rand.nextInt(3));
+                    GameMap.getItems().add(item);
+                }
             }
+
 
             // Kill Players
             for(int j=1; j<=4; j++) {
@@ -110,14 +119,18 @@ public class Bubble {
             // Block Into Floor
             if(x+i>=Config.GAME_WIDTH) break;
             if(!mb[y][x+i].isDestructible() && !mb[y][x+i].isWalkable()) break;
-            mb[y][x+i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x + i, y, false, true);
 
-            // Random Item
-            Random rand = new Random();
-            if(rand.nextInt(100)>50) {
-                Item item = new Item(x+i, y, 0, rand.nextInt(3));
-                GameMap.getItems().add(item);
+            if(i==1) {
+                mb[y][x+i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x + i, y, false, true);
+
+                // Random Item
+                Random rand = new Random();
+                if(rand.nextInt(100)>50) {
+                    Item item = new Item(x+i, y, 0, rand.nextInt(3));
+                    GameMap.getItems().add(item);
+                }
             }
+
 
             // Kill Players
             for(int j=1; j<=4; j++) {
@@ -138,14 +151,18 @@ public class Bubble {
             // Block Into Floor
             if(x-i<0) break;
             if(!mb[y][x-i].isDestructible() && !mb[y][x-i].isWalkable()) break;
-            mb[y][x-i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x-i, y, false, true);
 
-            // Random Item
-            Random rand = new Random();
-            if(rand.nextInt(100)>50) {
-                Item item = new Item(x-i, y, 0, rand.nextInt(3));
-                GameMap.getItems().add(item);
+            if(i==1) {
+                mb[y][x-i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x-i, y, false, true);
+
+                // Random Item
+                Random rand = new Random();
+                if(rand.nextInt(100)>50) {
+                    Item item = new Item(x-i, y, 0, rand.nextInt(3));
+                    GameMap.getItems().add(item);
+                }
             }
+
 
             // Kill Players
             for(int j=1; j<=4; j++) {

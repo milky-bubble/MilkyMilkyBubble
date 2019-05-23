@@ -29,4 +29,7 @@ public class MapBlock {
     }
     public boolean isWalkable() { return walkable; }
 
+    public void setWalkable(boolean walkable) {
+        this.walkable = walkable;
+    }
 }
