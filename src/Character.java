@@ -36,7 +36,7 @@ public class Character {
     public void drawSelf(Graphics g, int id) {
         BufferedImage image = ElementLoader.playerImageMap.get(id);
         int dx1 = x * Config.BLOCK_SIZE;
-        int dy1 = Config.BOARDER + y*Config.BLOCK_SIZE;
+        int dy1 = y*Config.BLOCK_SIZE;
         int dx2 = dx1 + Config.BLOCK_SIZE;
         int dy2 = dy1 + Config.BLOCK_SIZE;
         int sx1 = turn * image.getWidth() / 4;

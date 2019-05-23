@@ -188,7 +188,7 @@ public class Bubble {
     public void drawSelf(Graphics g, BufferedImage bubbleImg, int width, int height) {
         if(!alive) return;
         int dx1 = x*Config.BLOCK_SIZE;
-        int dy1 = Config.BOARDER + y*Config.BLOCK_SIZE;
+        int dy1 = y*Config.BLOCK_SIZE;
         int dx2 = dx1 + Config.BLOCK_SIZE;
         int dy2 = dy1 + Config.BLOCK_SIZE;
         int sx1 = (turn/9)*width/3;

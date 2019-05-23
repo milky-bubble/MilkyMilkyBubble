@@ -88,9 +88,13 @@ public class ElementLoader {
         ImageIcon iconImg = new ImageIcon("image/game/icon.jpg");
         ImageIcon beginBackgroundImg = new ImageIcon("image/game/beginbackground.png");
         ImageIcon beginButtonImg = new ImageIcon("image/game/beginbutton.png");
+        ImageIcon overBackgroundImg = new ImageIcon("image/game/overbackground.png");
+        ImageIcon overButtonImg = new ImageIcon("image/game/overbutton.png");
         gameImageMap.put("icon", iconImg);
-        gameImageMap.put("beginbackgroung", beginBackgroundImg);
+        gameImageMap.put("beginbackground", beginBackgroundImg);
         gameImageMap.put("beginbutton", beginButtonImg);
+        gameImageMap.put("overbackground", overBackgroundImg);
+        gameImageMap.put("overbutton", overButtonImg);
     }
 
     public static List<List<String>> readBlockInfo() throws IOException {

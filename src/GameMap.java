@@ -7,14 +7,6 @@ import java.io.IOException;
 public class GameMap {
 
     // Init ElementLoader
-    private static ElementLoader elementLoader;
-    static {
-        try {
-            elementLoader = ElementLoader.getElementLoader();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     // Game Elements
     private static BufferedImage[][] floor = new BufferedImage[Config.GAME_HEIGHT][Config.GAME_WIDTH];
@@ -31,13 +23,13 @@ public class GameMap {
     public GameMap() throws IOException {
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
             for(int j=0; j<Config.GAME_WIDTH; j++) {
-                floor[i][j] = elementLoader.blockImageMap.get("00");
+                floor[i][j] = ElementLoader.blockImageMap.get("00");
             }
         }
 
         for(int i=0; i<Config.GAME_HEIGHT; i++) {
             for(int j=0; j<Config.GAME_WIDTH; j++) {
-                List<List<String>> GameMapBlock = elementLoader.readBlockInfo();
+                List<List<String>> GameMapBlock = ElementLoader.readBlockInfo();
                 boolean destructible = (GameMapBlock.get(i).get(j).equals("41")
                         || GameMapBlock.get(i).get(j).equals("42")
                         || GameMapBlock.get(i).get(j).equals("43"));
@@ -53,12 +45,12 @@ public class GameMap {
         // Draw Floor & Blocks
         for (int i = 0; i < Config.GAME_HEIGHT; i++) {
             for (int j = 0; j < Config.GAME_WIDTH; j++) {
-                g.drawImage(floor[i][j], j * Config.BLOCK_SIZE, Config.BOARDER + i * Config.BLOCK_SIZE,
-                        (j + 1) * Config.BLOCK_SIZE, Config.BOARDER + (i + 1) * Config.BLOCK_SIZE,
+                g.drawImage(floor[i][j], j * Config.BLOCK_SIZE, i * Config.BLOCK_SIZE,
+                        (j + 1) * Config.BLOCK_SIZE, (i + 1) * Config.BLOCK_SIZE,
                         0, 0, floor[i][j].getWidth(), floor[i][j].getHeight(), null);
 
-                g.drawImage(block[i][j].getImage(), j * Config.BLOCK_SIZE, Config.BOARDER + i * Config.BLOCK_SIZE,
-                        (j + 1) * Config.BLOCK_SIZE, Config.BOARDER + (i + 1) * Config.BLOCK_SIZE,
+                g.drawImage(block[i][j].getImage(), j * Config.BLOCK_SIZE, i * Config.BLOCK_SIZE,
+                        (j + 1) * Config.BLOCK_SIZE,  (i + 1) * Config.BLOCK_SIZE,
                         0, 0, block[i][j].getImage().getWidth(), block[i][j].getImage().getHeight(), null);
             }
         }
