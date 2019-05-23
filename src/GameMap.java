@@ -118,4 +118,5 @@ public class GameMap {
             case 4: player4 = null; break;
         }
     }
+
 }

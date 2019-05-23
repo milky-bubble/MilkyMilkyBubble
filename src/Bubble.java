@@ -50,13 +50,14 @@ public class Bubble {
         }
 
         // Down
+        int cntDown = 0;
         for(int i=1; i<=power; i++) {
             // Block Into Floor
-
             if(y+i>=Config.GAME_HEIGHT) break;
             if(!mb[y+i][x].isDestructible() && !mb[y+i][x].isWalkable()) break;
 
-            if(i==1) {
+            if(!mb[y+i][x].isWalkable() && cntDown==0) {
+                cntDown++;
                 mb[y+i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y + i, false, true);
 
                 // Random Items
@@ -82,13 +83,15 @@ public class Bubble {
         }
 
         // Up
+        int cntUp = 0;
         for(int i=1; i<=power; i++) {
             // Bloc Into Floor
             if(y-i<0) break;
             if(!mb[y-i][x].isDestructible() && !mb[y-i][x].isWalkable()) break;
 
-            if(i==1) {
+            if(!mb[y-i][x].isWalkable() && cntUp==0) {
                 mb[y-i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y - i, false, true);
+                cntUp++;
 
                 // Random Items
                 Random rand = new Random();
@@ -115,12 +118,14 @@ public class Bubble {
         }
 
         // Right
+        int rightCnt = 0;
         for(int i=1; i<=power; i++) {
             // Block Into Floor
             if(x+i>=Config.GAME_WIDTH) break;
             if(!mb[y][x+i].isDestructible() && !mb[y][x+i].isWalkable()) break;
 
-            if(i==1) {
+            if(!mb[y][x+i].isWalkable() && rightCnt==0) {
+                rightCnt++;
                 mb[y][x+i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x + i, y, false, true);
 
                 // Random Item
@@ -147,14 +152,15 @@ public class Bubble {
         }
 
         // Left
+        int leftCnt = 0;
         for(int i=1; i<=power; i++) {
             // Block Into Floor
             if(x-i<0) break;
             if(!mb[y][x-i].isDestructible() && !mb[y][x-i].isWalkable()) break;
 
-            if(i==1) {
+            if(!mb[y][x-i].isWalkable() && leftCnt==0) {
                 mb[y][x-i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x-i, y, false, true);
-
+                leftCnt++;
                 // Random Item
                 Random rand = new Random();
                 if(rand.nextInt(100)>50) {
