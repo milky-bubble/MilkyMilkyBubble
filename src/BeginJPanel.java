@@ -20,7 +20,7 @@ public class BeginJPanel extends JPanel {
         beginButton.setImage(beginButton.getImage().getScaledInstance(160, 98, Image.SCALE_DEFAULT));
         jButton.setIcon(beginButton);
         jButton.setBorderPainted(false);
-        jButton.setBounds(400, 400, 160, 98);
+        jButton.setBounds(600, 550, 160, 98);
         jButton.setContentAreaFilled(false);
         jButton.addActionListener(new ActionListener() {
             @Override

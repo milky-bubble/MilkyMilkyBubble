@@ -86,7 +86,7 @@ public class ElementLoader {
 
     private static void initGameImageMap() throws IOException {
         ImageIcon iconImg = new ImageIcon("image/game/icon.jpg");
-        ImageIcon beginBackgroundImg = new ImageIcon("image/game/beginbackground.png");
+        ImageIcon beginBackgroundImg = new ImageIcon("image/game/beginbackground.jpg");
         ImageIcon beginButtonImg = new ImageIcon("image/game/beginbutton.png");
         ImageIcon overBackgroundImg = new ImageIcon("image/game/overbackground.png");
         ImageIcon player01Img = new ImageIcon("image/game/player1.png");
