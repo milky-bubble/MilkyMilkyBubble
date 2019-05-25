@@ -9,4 +9,5 @@ public class Config {
     public static final int BUBBLEMAX = 5;
     public static final int POWERMAX = 3;
     public static final int LIFEMAX = 3;
+    public static final int STEP = 5;
 }

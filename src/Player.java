@@ -29,19 +29,27 @@ public class Player extends Character {
         if(dead) return;
         switch(direction) {
             case 4:
-                if(!crashUp()) y -= 1;
+                if(!crashUp()) {
+                    y -= 1;
+                }
                 break;
             case 1:
-                if(!crashDown()) y += 1;
+                if(!crashDown()) {
+                    y += 1;
+                }
                 break;
             case 2:
-                if(!crashLeft()) x -= 1;
+                if(!crashLeft()) {
+                    x -= 1;
+                }
                 break;
             case 3:
-                if(!crashRight()) x += 1;
+                if(!crashRight()) {
+                    x += 1;
+                }
                 break;
         }
-        if(direction != 0 && direction != direction_cur) direction_cur = direction;
+        if(direction != 0) direction_cur = direction;
         if(direction != 0) turn = (turn + 1) % 4;
         direction = 0;
         pickItem();

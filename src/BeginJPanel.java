@@ -14,10 +14,14 @@ public class BeginJPanel extends JPanel {
         JLabel jLabel = new JLabel(background);
         background.setImage(background.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         jLabel.setBounds(0, 0, width, height);
+        JButton jButton = new JButton();
 
-        JButton jButton = new JButton(beginButton);
-        beginButton.setImage(beginButton.getImage().getScaledInstance(100, 50, Image.SCALE_DEFAULT));
-        jButton.setBounds(width/3, height/3, 100, 50);
+
+        beginButton.setImage(beginButton.getImage().getScaledInstance(160, 98, Image.SCALE_DEFAULT));
+        jButton.setIcon(beginButton);
+        jButton.setBorderPainted(false);
+        jButton.setBounds(400, 400, 160, 98);
+        jButton.setContentAreaFilled(false);
         jButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -28,8 +32,9 @@ public class BeginJPanel extends JPanel {
                 }
             }
         });
-        this.add(jLabel);
         this.add(jButton);
+        this.add(jLabel);
+
         this.setVisible(true);
     }
 

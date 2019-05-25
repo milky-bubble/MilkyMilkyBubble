@@ -15,6 +15,7 @@ public class Character {
     protected int bubblePower;
     protected int bubbleNumMax;
     protected int life;
+    protected int count;
 
     public Character(int x, int y, int id, BufferedImage image, int direction) {
         this.x = x;
@@ -29,14 +30,16 @@ public class Character {
         this.bubbleNumMax = 1;
         this.bubblePower = 1;
         this.life = 1;
+        this.count = 11;
     }
 
     MapBlock[][] mb = GameMap.getBlock();
 
     public void drawSelf(Graphics g, int id) {
+
         BufferedImage image = ElementLoader.playerImageMap.get(id);
         int dx1 = x * Config.BLOCK_SIZE;
-        int dy1 = y*Config.BLOCK_SIZE;
+        int dy1 = y * Config.BLOCK_SIZE;
         int dx2 = dx1 + Config.BLOCK_SIZE;
         int dy2 = dy1 + Config.BLOCK_SIZE;
         int sx1 = turn * image.getWidth() / 4;
@@ -45,24 +48,31 @@ public class Character {
         int sy2 = sy1 + image.getHeight()/4;
         g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
-
-//    public void drawSelfWalkingProcess(Graphics g, int id) {
+//    public void drawSelf(Graphics g, int id) {
 //        BufferedImage image = ElementLoader.playerImageMap.get(id);
+//
 //        int dx1 = x * Config.BLOCK_SIZE;
-//        int dy1 = Config.BOARDER + y*Config.BLOCK_SIZE;
+//        int dy1 = y * Config.BLOCK_SIZE;
+//
+//        if(direction == 1 && !crashDown()) dy1 += (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
+//        else if(direction == 2 && !crashLeft()) dx1 -= (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
+//        else if(direction == 3 && !crashRight()) dx1 += (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
+//        else if(direction == 4 && !crashUp()) dy1 -= (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
 //        int dx2 = dx1 + Config.BLOCK_SIZE;
 //        int dy2 = dy1 + Config.BLOCK_SIZE;
 //        int sx1 = turn * image.getWidth() / 4;
 //        int sy1 = (direction_cur - 1) * image.getHeight()/4;
 //        int sx2 = sx1 + image.getWidth() / 4;
 //        int sy2 = sy1 + image.getHeight()/4;
+//
 //        g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+//
 //    }
 
     public void addBubble() {
         if(dead) return;
         if(bubbleNum == bubbleNumMax) return;
-        Bubble b = new Bubble(x, y, bubblePower, id);
+        Bubble b = new Bubble(x, y, bubblePower, id, GameJPanel.timeCount);
         bubbleNum++;
         GameMap.getBubbles().add(b);
         mb[y][x].setWalkable(false);

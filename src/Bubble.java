@@ -9,31 +9,29 @@ public class Bubble {
     private int power;
     private int turn;
     private int playerId;
+    private int startTime;
     private boolean alive;
 
-    public Bubble(int x, int y, int power, int playerId) {
+    public Bubble(int x, int y, int power, int playerId, int startTime) {
         this.x = x;
         this.y = y;
         this.power = power;
         this.turn = 0;
         this.alive = true;
         this.playerId = playerId;
+        this.startTime = startTime;
     }
 
     public void lastForCertainTime() {
-        Timer timer = new Timer(true);
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                alive = false;
-                Character cur = GameMap.getPlayer(playerId);
-                cur.setBubbleNum(cur.getBubbleNum()-1);
-                bubbleExplode();
-                GameMap.getBlock()[y][x].setWalkable(true);
-                System.gc();
-            }
-        };
-        timer.schedule(task, 2500);
+        if(GameJPanel.timeCount-startTime == 100) {
+            alive = false;
+            Character cur = GameMap.getPlayer(playerId);
+            cur.setBubbleNum(cur.getBubbleNum()-1);
+            bubbleExplode();
+            GameMap.getBlock()[y][x].setWalkable(true);
+            return;
+        }
+
     }
 
     public void bubbleExplode() {
@@ -45,7 +43,11 @@ public class Bubble {
             if(player==null) continue;
             if(player.getX() == x && player.getY() == y) {
                 player.setLife(player.getLife()-1);
-                if(player.getLife()==0) GameMap.removePlayer(i);
+                GameJPanel.setStatusText(i);
+                if(player.getLife()==0) {
+                    GameMap.removePlayer(i);
+                    GameJPanel.setDead(i);
+                }
             }
         }
 
@@ -74,8 +76,10 @@ public class Bubble {
                 if(player==null) continue;
                 if(player.getX()==x && player.getY()==y+i) {
                     player.setLife(player.getLife()-1);
+                    GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
                         player.setDead(true);
+                        GameJPanel.setDead(j);
                         GameMap.removePlayer(j);
                     }
                 }
@@ -108,8 +112,10 @@ public class Bubble {
                 if(player==null) continue;
                 if(player.getX()==x && player.getY()==y-i) {
                     player.setLife(player.getLife()-1);
+                    GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
                         player.setDead(true);
+                        GameJPanel.setDead(j);
                         GameMap.removePlayer(j);
                     }
                 }
@@ -143,8 +149,10 @@ public class Bubble {
                 if(player==null) continue;
                 if(player.getX()==x+i && player.getY()==y) {
                     player.setLife(player.getLife()-1);
+                    GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
                         player.setDead(true);
+                        GameJPanel.setDead(j);
                         GameMap.removePlayer(j);
                     }
                 }
@@ -176,9 +184,11 @@ public class Bubble {
                 if(player==null) continue;
                 if(player.getX()==x-i && player.getY()==y) {
                     player.setLife(player.getLife()-1);
+                    GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
                         player.setDead(true);
                         GameMap.removePlayer(j);
+                        GameJPanel.setDead(j);
                     }
                 }
             }
@@ -186,16 +196,17 @@ public class Bubble {
     }
 
     public void drawSelf(Graphics g, BufferedImage bubbleImg, int width, int height) {
+        lastForCertainTime();
         if(!alive) return;
         int dx1 = x*Config.BLOCK_SIZE;
         int dy1 = y*Config.BLOCK_SIZE;
         int dx2 = dx1 + Config.BLOCK_SIZE;
         int dy2 = dy1 + Config.BLOCK_SIZE;
-        int sx1 = (turn/9)*width/3;
+        int sx1 = (turn/4) *width/3;
         int sy1 = 0;
         int sx2 = sx1 + width/3;
         int sy2 = height;
-        turn = ((turn + 1) % 27);
+        turn = ((turn + 1) % 12);
         g.drawImage(bubbleImg, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
 

@@ -1,7 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -15,7 +18,7 @@ public class GameFrame extends JFrame{
     private GameFrame() throws IOException {
         this.setSize(Config.WINDOW_WIDTH + Config.PLAYER_INFO, Config.WINDOW_HEIGHT + Config.BOARDER);
         this.setTitle("Milky Milky Bubble");
-
+        this.setIconImage(ImageIO.read(new File("image/game/icon.jpg")));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,7 +44,6 @@ public class GameFrame extends JFrame{
         return gameFrame;
     }
 
-
     public static void startGame() throws IOException {
         GameFrame.getGameFrame().setVisible(false);
         GameFrame.getGameFrame().setVisible(true);
@@ -62,15 +64,6 @@ public class GameFrame extends JFrame{
         overJPanel = new OverJPanel();
         contentPane.add("over", overJPanel);
         layout.show(contentPane, "over");
-    }
-
-    public static void gameRestart() throws IOException {
-        GameFrame.getGameFrame().setVisible(false);
-        GameFrame.getGameFrame().setVisible(true);
-
-        beginJPanel = new BeginJPanel();
-        contentPane.add("begin", beginJPanel);
-        layout.show(contentPane, "begin");
     }
 
     public static void main(String[] args) throws IOException {

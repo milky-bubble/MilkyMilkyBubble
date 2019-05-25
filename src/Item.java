@@ -32,6 +32,7 @@ public class Item {
                 if(player.getLife()<Config.LIFEMAX)
                     player.setLife(player.getLife()+1);
         }
+        GameJPanel.setStatusText(playerId);
     }
 
     // Draw Self Function
