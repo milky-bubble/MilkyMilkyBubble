@@ -174,10 +174,10 @@ public class GameJPanel extends JPanel implements Runnable{
             }
 
 //            if(timeCount % (Config.BOARDER/Config.STEP) == 0)
-            gameMap.update();
+
             offScreenImage = this.createImage(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
             Graphics gOff = offScreenImage.getGraphics();
-
+            gameMap.update();
             gameMap.drawMap(gOff);
             repaint();
             try {

@@ -65,7 +65,7 @@ public class Bubble {
                 if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
                 // Random Items
                 Random rand = new Random();
-                if(rand.nextInt(100)>30) {
+                if(rand.nextInt(100)>80) {
                     Item item = new Item(x, y+i, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -103,7 +103,7 @@ public class Bubble {
 
                 // Random Items
                 Random rand = new Random();
-                if(rand.nextInt(100)>50) {
+                if(rand.nextInt(100)>80) {
                     Item item = new Item(x, y-i, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -142,7 +142,7 @@ public class Bubble {
 
                 // Random Item
                 Random rand = new Random();
-                if(rand.nextInt(100)>50) {
+                if(rand.nextInt(100)>80) {
                     Item item = new Item(x+i, y, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -180,7 +180,7 @@ public class Bubble {
                 leftCnt++;
                 // Random Item
                 Random rand = new Random();
-                if(rand.nextInt(100)>50) {
+                if(rand.nextInt(100)>80) {
                     Item item = new Item(x-i, y, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
