@@ -1,9 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,7 +11,8 @@ public class GameFrame extends JFrame{
     private static CardLayout layout;
     private static BeginJPanel beginJPanel;
     private static GameJPanel gameJPanel;
-    private static OverJPanel overJPanel;
+    private static LoseJPanel overJPanel;
+    private static WinJPanel winJPanel;
     private GameFrame() throws IOException {
         this.setSize(Config.WINDOW_WIDTH + Config.PLAYER_INFO, Config.WINDOW_HEIGHT + Config.BOARDER);
         this.setTitle("Milky Milky Bubble");
@@ -61,9 +59,18 @@ public class GameFrame extends JFrame{
         GameFrame.getGameFrame().setVisible(false);
         GameFrame.getGameFrame().setVisible(true);
 
-        overJPanel = new OverJPanel();
+        overJPanel = new LoseJPanel();
         contentPane.add("over", overJPanel);
         layout.show(contentPane, "over");
+    }
+
+    public static void gameWin() throws IOException {
+        GameFrame.getGameFrame().setVisible(false);
+        GameFrame.getGameFrame().setVisible(true);
+
+        winJPanel = new WinJPanel();
+        contentPane.add("win", winJPanel);
+        layout.show(contentPane, "win");
     }
 
     public static void main(String[] args) throws IOException {

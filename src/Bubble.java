@@ -42,11 +42,12 @@ public class Bubble {
             Character player = GameMap.getPlayer(i);
             if(player==null) continue;
             if(player.getX() == x && player.getY() == y) {
-                player.setLife(player.getLife()-1);
+                player.setLife(player.getLife() - 1);
                 GameJPanel.setStatusText(i);
-                if(player.getLife()==0) {
+                if (player.getLife() == 0) {
                     GameMap.removePlayer(i);
                     GameJPanel.setDead(i);
+                    if (GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 500;
                 }
             }
         }
@@ -61,10 +62,10 @@ public class Bubble {
             if(!mb[y+i][x].isWalkable() && cntDown==0) {
                 cntDown++;
                 mb[y+i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y + i, false, true);
-
+                if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
                 // Random Items
                 Random rand = new Random();
-                if(rand.nextInt(100)>50) {
+                if(rand.nextInt(100)>30) {
                     Item item = new Item(x, y+i, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -78,12 +79,14 @@ public class Bubble {
                     player.setLife(player.getLife()-1);
                     GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
+                        if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 500;
                         player.setDead(true);
                         GameJPanel.setDead(j);
                         GameMap.removePlayer(j);
                     }
                 }
             }
+            if(GameMap.getPlayer(playerId)!=null) GameJPanel.setStatusText(playerId);
         }
 
         // Up
@@ -95,6 +98,7 @@ public class Bubble {
 
             if(!mb[y-i][x].isWalkable() && cntUp==0) {
                 mb[y-i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y - i, false, true);
+                if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
                 cntUp++;
 
                 // Random Items
@@ -114,13 +118,14 @@ public class Bubble {
                     player.setLife(player.getLife()-1);
                     GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
+                        if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 500;
                         player.setDead(true);
                         GameJPanel.setDead(j);
                         GameMap.removePlayer(j);
                     }
                 }
             }
-
+            if(GameMap.getPlayer(playerId)!=null) GameJPanel.setStatusText(playerId);
         }
 
         // Right
@@ -132,6 +137,7 @@ public class Bubble {
 
             if(!mb[y][x+i].isWalkable() && rightCnt==0) {
                 rightCnt++;
+                if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
                 mb[y][x+i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x + i, y, false, true);
 
                 // Random Item
@@ -151,12 +157,14 @@ public class Bubble {
                     player.setLife(player.getLife()-1);
                     GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
+                        if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 500;
                         player.setDead(true);
                         GameJPanel.setDead(j);
                         GameMap.removePlayer(j);
                     }
                 }
             }
+            if(GameMap.getPlayer(playerId)!=null) GameJPanel.setStatusText(playerId);
         }
 
         // Left
@@ -168,6 +176,7 @@ public class Bubble {
 
             if(!mb[y][x-i].isWalkable() && leftCnt==0) {
                 mb[y][x-i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x-i, y, false, true);
+                if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
                 leftCnt++;
                 // Random Item
                 Random rand = new Random();
@@ -186,12 +195,14 @@ public class Bubble {
                     player.setLife(player.getLife()-1);
                     GameJPanel.setStatusText(j);
                     if(player.getLife()==0) {
+                        if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 500;
                         player.setDead(true);
                         GameMap.removePlayer(j);
                         GameJPanel.setDead(j);
                     }
                 }
             }
+            if(GameMap.getPlayer(playerId)!=null) GameJPanel.setStatusText(playerId);
         }
     }
 

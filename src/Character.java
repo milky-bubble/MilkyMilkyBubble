@@ -16,6 +16,7 @@ public class Character {
     protected int bubbleNumMax;
     protected int life;
     protected int count;
+    protected int score;
 
     public Character(int x, int y, int id, BufferedImage image, int direction) {
         this.x = x;
@@ -31,6 +32,7 @@ public class Character {
         this.bubblePower = 1;
         this.life = 1;
         this.count = 11;
+        this.score = 0;
     }
 
     MapBlock[][] mb = GameMap.getBlock();
@@ -168,4 +170,7 @@ public class Character {
         this.life = life;
     }
 
+    public int getScore() {
+        return score;
+    }
 }

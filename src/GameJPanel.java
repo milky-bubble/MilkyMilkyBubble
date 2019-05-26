@@ -106,7 +106,8 @@ public class GameJPanel extends JPanel implements Runnable{
         for(int i=0; i<4; i++) {
             status[i] = new JLabel("<html>Life: "+player[i].getLife()+
                     "<br>Bubble Number: "+player[i].getBubbleNumMax()+
-                    "<br>Bubble Power: "+player[i].getBubblePower()+"</html>", JLabel.CENTER);
+                    "<br>Bubble Power: "+player[i].getBubblePower()+
+                    "<br>Score: "+player[i].getScore()+"</html>", JLabel.CENTER);
             status[i].setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             status[i].setBounds(10, 60, 150, 100);
             switch(i) {
@@ -142,12 +143,19 @@ public class GameJPanel extends JPanel implements Runnable{
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
+    private int highestScore() {
+        int Max = -1;
+        for(int i=1; i<=4; i++) {
+            if(GameMap.getPlayer(i)!=null && GameMap.getPlayer(i).getScore()>Max) Max = i;
+        }
+        return Max;
+    }
     @Override
     public void run() {
         while(true) {
             timeCount++;
             showTime();
-            if(GameMap.getPlayer(1)==null) {
+            if(GameMap.getPlayer(1)==null || (timeCount>40*600 && highestScore()!=GameMap.getPlayer(1).getScore())) {
                 try {
                     GameFrame.gameOver();
                 } catch (IOException e) {
@@ -155,6 +163,16 @@ public class GameJPanel extends JPanel implements Runnable{
                 }
                 break;
             }
+            else if(timeCount>40*600 ||
+                    ((GameMap.getPlayer(4)==null&&GameMap.getPlayer(2)==null&&GameMap.getPlayer(3)==null))) {
+                try {
+                    GameFrame.gameWin();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+
 //            if(timeCount % (Config.BOARDER/Config.STEP) == 0)
             gameMap.update();
             offScreenImage = this.createImage(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
@@ -193,7 +211,8 @@ public class GameJPanel extends JPanel implements Runnable{
         id--;
         status[id].setText("<html>Life: "+player[id].getLife()+
                 "<br>Bubble Number: "+player[id].getBubbleNumMax()+
-                "<br>Bubble Power: "+player[id].getBubblePower()+"</html>");
+                "<br>Bubble Power: "+player[id].getBubblePower()+
+                "<br>Score: "+player[id].getScore()+"</html>");
     }
 
     public static void setDead(int id) {
