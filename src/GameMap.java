@@ -111,4 +111,7 @@ public class GameMap {
         }
     }
 
+    public static Character getPlayer1() {
+        return player1;
+    }
 }
