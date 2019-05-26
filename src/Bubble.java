@@ -23,7 +23,7 @@ public class Bubble {
     }
 
     public void lastForCertainTime() {
-        if(GameJPanel.timeCount-startTime == 100) {
+        if(GameJPanel.timeCount-startTime == 50) {
             alive = false;
             Character cur = GameMap.getPlayer(playerId);
             cur.setBubbleNum(cur.getBubbleNum()-1);
@@ -213,4 +213,9 @@ public class Bubble {
     // Getters
     public boolean isAlive() { return alive; }
 
+    public int getX() { return x; }
+
+    public int getY() { return y; }
+
+    public int getPower() { return power; }
 }
