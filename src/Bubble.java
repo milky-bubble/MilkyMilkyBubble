@@ -33,9 +33,9 @@ public class Bubble {
         if(GameJPanel.timeCount-startTime == 50) {
             alive = false;
             Character cur = GameMap.getPlayer(playerId);
-            cur.setBubbleNum(cur.getBubbleNum()-1);
+            if(cur!=null) cur.setBubbleNum(cur.getBubbleNum()-1);
             bubbleExplode();
-            GameMap.getBlock()[y][x].setWalkable(true);
+            GameMap.getBlock()[y][x].setHasBubble(false);
         }
     }
 
@@ -102,7 +102,7 @@ public class Bubble {
             boolean flag = mb[y+i][x].isWalkable();
             // Block Into Floor
             mb[y+i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y + i, false, true);
-            if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
+            if(GameMap.getPlayer(playerId) != null && !flag) GameMap.getPlayer(playerId).score += 20;
 
             // Random Items
             if(!flag) {
@@ -111,7 +111,7 @@ public class Bubble {
                     Item item = new Item(x, y + i, 0, 2);
                     GameMap.getItems().add(item);
                 }
-                else if (rand.nextInt(100) > 80) {
+                else if (rand.nextInt(100) > 60) {
                     Item item = new Item(x, y + i, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -139,7 +139,7 @@ public class Bubble {
             boolean flag = mb[y-i][x].isWalkable();
             // Block Into Floor
             mb[y-i][x] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x, y - i, false, true);
-            if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
+            if(GameMap.getPlayer(playerId) != null && !flag) GameMap.getPlayer(playerId).score += 20;
 
             // Random Items
             if(!flag) {
@@ -147,7 +147,7 @@ public class Bubble {
                 if (rand.nextInt(100) > 95) {
                     Item item = new Item(x, y - i, 0, 2);
                     GameMap.getItems().add(item);
-                } else if (rand.nextInt(100) > 80) {
+                } else if (rand.nextInt(100) > 60) {
                     Item item = new Item(x, y - i, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -175,7 +175,7 @@ public class Bubble {
         for(int i=1; i<=right; i++) {
             boolean flag = mb[y][x+i].isWalkable();
             // Block Into Floor
-            if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
+            if(GameMap.getPlayer(playerId) != null && !flag) GameMap.getPlayer(playerId).score += 20;
             mb[y][x+i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x + i, y, false, true);
 
             // Random Item
@@ -184,7 +184,7 @@ public class Bubble {
                 if (rand.nextInt(100) > 95) {
                     Item item = new Item(x + i, y, 0, 2);
                     GameMap.getItems().add(item);
-                } else if (rand.nextInt(100) > 80) {
+                } else if (rand.nextInt(100) > 60) {
                     Item item = new Item(x + i, y, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
@@ -213,14 +213,14 @@ public class Bubble {
             boolean flag = mb[y][x-i].isWalkable();
             // Block Into Floor
             mb[y][x-i] = new MapBlock(ElementLoader.blockImageMap.get("00"), "00", x-i, y, false, true);
-            if(GameMap.getPlayer(playerId) != null) GameMap.getPlayer(playerId).score += 20;
+            if(GameMap.getPlayer(playerId) != null && !flag) GameMap.getPlayer(playerId).score += 20;
             // Random Item
             if(!flag) {
                 Random rand = new Random();
                 if (rand.nextInt(100) > 95) {
                     Item item = new Item(x - i, y, 0, 2);
                     GameMap.getItems().add(item);
-                } else if (rand.nextInt(100) > 80) {
+                } else if (rand.nextInt(100) > 60) {
                     Item item = new Item(x - i, y, 0, rand.nextInt(2));
                     GameMap.getItems().add(item);
                 }

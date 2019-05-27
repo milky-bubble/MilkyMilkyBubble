@@ -61,8 +61,9 @@ public class GameMap {
             item.drawSelf(g, image, image.getWidth(), image.getHeight());
         }
 
+        ArrayList<Bubble> bubbles0 = (ArrayList<Bubble>) bubbles.clone();
         // Draw Bubbles
-        for(Bubble bubble : bubbles) {
+        for(Bubble bubble : bubbles0) {
             BufferedImage bubbleImg = ElementLoader.bubbleImageMap.get("bubble");
             bubble.drawSelf(g, bubbleImg, bubbleImg.getWidth(), bubbleImg.getHeight());
         }

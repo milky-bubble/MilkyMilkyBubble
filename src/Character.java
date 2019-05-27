@@ -109,7 +109,8 @@ public class Character {
         Bubble b = new Bubble(x, y, bubblePower, id, GameJPanel.timeCount);
         bubbleNum++;
         GameMap.getBubbles().add(b);
-        mb[y][x].setWalkable(false);
+        mb[y][x].setHasBubble(true);
+//        mb[y][x].setWalkable(false);
         // b.lastForCertainTime();
     }
 
@@ -127,25 +128,25 @@ public class Character {
 
     public boolean crashDown() {
         if(y+1>=Config.GAME_HEIGHT) return true;
-        if(!mb[y+1][x].isWalkable()) return true;
+        if(!mb[y+1][x].isWalkable() || mb[y+1][x].isHasBubble()) return true;
         return false;
     }
 
     public boolean crashUp() {
         if(y-1<0)return true;
-        if(!mb[y-1][x].isWalkable()) return true;
+        if(!mb[y-1][x].isWalkable() || mb[y-1][x].isHasBubble()) return true;
         return false;
     }
 
     public boolean crashLeft() {
         if(x-1<0)return true;
-        if(!mb[y][x-1].isWalkable()) return true;
+        if(!mb[y][x-1].isWalkable() || mb[y][x-1].isHasBubble()) return true;
         return false;
     }
 
     public boolean crashRight() {
         if(x+1>=Config.GAME_WIDTH) return true;
-        if(!mb[y][x+1].isWalkable()) return true;
+        if(!mb[y][x+1].isWalkable() || mb[y][x+1].isHasBubble()) return true;
         return false;
     }
 
