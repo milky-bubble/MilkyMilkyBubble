@@ -81,7 +81,9 @@ public class ElementLoader {
 
     private static void initBubbleImageMap() throws IOException {
         BufferedImage bubbleImg = ImageIO.read(new File("image/bubble/bubble.png"));
+        BufferedImage centerImg = ImageIO.read(new File("image/bubble/bubble.png"));
         bubbleImageMap.put("bubble", bubbleImg);
+        bubbleImageMap.put("center", centerImg);
     }
 
     private static void initGameImageMap() throws IOException {

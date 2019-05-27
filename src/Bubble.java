@@ -29,14 +29,14 @@ public class Bubble {
             cur.setBubbleNum(cur.getBubbleNum()-1);
             bubbleExplode();
             GameMap.getBlock()[y][x].setWalkable(true);
+//            drawBubbleExplode();
             return;
         }
-
     }
+
 
     public void bubbleExplode() {
         MapBlock mb[][] = GameMap.getBlock();
-
         // Center Kill Players
         for(int i=1; i<=4; i++) {
             Character player = GameMap.getPlayer(i);
