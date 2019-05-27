@@ -16,6 +16,7 @@ public class Character {
     protected int bubbleNumMax;
     protected int life;
     protected int count;
+    protected int score;
 
     public Character(int x, int y, int id, BufferedImage image, int direction) {
         this.x = x;
@@ -30,13 +31,46 @@ public class Character {
         this.bubbleNumMax = 1;
         this.bubblePower = 1;
         this.life = 1;
-        this.count = 11;
+        this.score = 0;
+        this.count = 0;
     }
 
     MapBlock[][] mb = GameMap.getBlock();
 
-    public void drawSelf(Graphics g, int id) {
+    public void updateSelf(Graphics g) {
+    }
 
+//    public void move() {
+//        if(dead) return;
+//        switch(direction) {
+//            case 4:
+//                if(!crashUp()) {
+//                    y -= 1;
+//                }
+//                break;
+//            case 1:
+//                if(!crashDown()) {
+//                    y += 1;
+//                }
+//                break;
+//            case 2:
+//                if(!crashLeft()) {
+//                    x -= 1;
+//                }
+//                break;
+//            case 3:
+//                if(!crashRight()) {
+//                    x += 1;
+//                }
+//                break;
+//        }
+//        if(direction != 0) direction_cur = direction;
+//        if(direction != 0) turn = (turn + 1) % 4;
+//        direction = 0;
+//        pickItem();
+//    }
+
+    public void drawSelf(Graphics g, int id) {
         BufferedImage image = ElementLoader.playerImageMap.get(id);
         int dx1 = x * Config.BLOCK_SIZE;
         int dy1 = y * Config.BLOCK_SIZE;
@@ -76,7 +110,7 @@ public class Character {
         bubbleNum++;
         GameMap.getBubbles().add(b);
         mb[y][x].setWalkable(false);
-        b.lastForCertainTime();
+        // b.lastForCertainTime();
     }
 
     public void pickItem() {
@@ -168,4 +202,7 @@ public class Character {
         this.life = life;
     }
 
+    public int getScore() {
+        return score;
+    }
 }

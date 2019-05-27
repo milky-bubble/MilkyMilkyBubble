@@ -24,6 +24,7 @@ public class GameJPanel extends JPanel implements Runnable{
     public GameJPanel() throws IOException {
         gameMap = new GameMap();
         offScreenImage = null;
+        this.setVisible(true);
         this.minute0 = 0;
         this.minute1 = 0;
         this.second0 = 0;
@@ -106,7 +107,8 @@ public class GameJPanel extends JPanel implements Runnable{
         for(int i=0; i<4; i++) {
             status[i] = new JLabel("<html>Life: "+player[i].getLife()+
                     "<br>Bubble Number: "+player[i].getBubbleNumMax()+
-                    "<br>Bubble Power: "+player[i].getBubblePower()+"</html>", JLabel.CENTER);
+                    "<br>Bubble Power: "+player[i].getBubblePower()+
+                    "<br>Score: "+player[i].getScore()+"</html>", JLabel.CENTER);
             status[i].setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             status[i].setBounds(10, 60, 150, 100);
             switch(i) {
@@ -128,12 +130,11 @@ public class GameJPanel extends JPanel implements Runnable{
                     case KeyEvent.VK_DOWN: gameMap.getPlayer(1).setDirection(1); break;
                     case KeyEvent.VK_LEFT: gameMap.getPlayer(1).setDirection(2); break;
                     case KeyEvent.VK_RIGHT: gameMap.getPlayer(1).setDirection(3); break;
-                    case KeyEvent.VK_ENTER: gameMap.getPlayer(1).addBubble(); break;
+                    case KeyEvent.VK_SPACE: gameMap.getPlayer(1).addBubble(); break;
                     default: gameMap.getPlayer(1).setDirection(0);
                 }
             }
         });
-        this.setVisible(true);
     }
 
     @Override
@@ -142,24 +143,45 @@ public class GameJPanel extends JPanel implements Runnable{
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
+    private int highestScore() {
+        int Max = -1;
+        for(int i=1; i<=4; i++) {
+            if(GameMap.getPlayer(i)!=null && GameMap.getPlayer(i).getScore()>Max) Max = i;
+        }
+        return Max;
+    }
     @Override
     public void run() {
         while(true) {
             timeCount++;
             showTime();
-            if(GameMap.getPlayer(1)==null) {
+            if(GameMap.getPlayer(1)==null || (timeCount>40*600 && highestScore()!=GameMap.getPlayer(1).getScore())) {
                 try {
+                    sleep(1000);
                     GameFrame.gameOver();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             }
-//            if(timeCount % (Config.BOARDER/Config.STEP) == 0)
-            gameMap.update();
+            else if(timeCount>40*600 ||
+                    ((GameMap.getPlayer(4)==null&&GameMap.getPlayer(2)==null&&GameMap.getPlayer(3)==null))) {
+                try {
+                    sleep(1000);
+                    GameFrame.gameWin();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+
             offScreenImage = this.createImage(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
             Graphics gOff = offScreenImage.getGraphics();
-
+            gameMap.update();
             gameMap.drawMap(gOff);
             repaint();
             try {
@@ -193,7 +215,8 @@ public class GameJPanel extends JPanel implements Runnable{
         id--;
         status[id].setText("<html>Life: "+player[id].getLife()+
                 "<br>Bubble Number: "+player[id].getBubbleNumMax()+
-                "<br>Bubble Power: "+player[id].getBubblePower()+"</html>");
+                "<br>Bubble Power: "+player[id].getBubblePower()+
+                "<br>Score: "+player[id].getScore()+"</html>");
     }
 
     public static void setDead(int id) {

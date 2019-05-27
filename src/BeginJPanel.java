@@ -16,7 +16,6 @@ public class BeginJPanel extends JPanel {
         jLabel.setBounds(0, 0, width, height);
         JButton jButton = new JButton();
 
-
         beginButton.setImage(beginButton.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
         jButton.setIcon(beginButton);
         jButton.setBorderPainted(false);
@@ -26,6 +25,7 @@ public class BeginJPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    GameFrame.getGameFrame().setVisible(false);
                     GameFrame.startGame();
                 } catch (IOException e1) {
                     e1.printStackTrace();

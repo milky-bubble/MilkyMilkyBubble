@@ -81,14 +81,29 @@ public class ElementLoader {
 
     private static void initBubbleImageMap() throws IOException {
         BufferedImage bubbleImg = ImageIO.read(new File("image/bubble/bubble.png"));
+        BufferedImage centerImg = ImageIO.read(new File("image/bubble/boomcenter.png"));
+        BufferedImage horizontalImg = ImageIO.read(new File("image/bubble/boomhorizontal.png"));
+        BufferedImage verticalImg = ImageIO.read(new File("image/bubble/boomvertical.png"));
+        BufferedImage upImg = ImageIO.read(new File("image/bubble/boomup.png"));
+        BufferedImage downImg = ImageIO.read(new File("image/bubble/boomdown.png"));
+        BufferedImage leftImg = ImageIO.read(new File("image/bubble/boomleft.png"));
+        BufferedImage rightImg = ImageIO.read(new File("image/bubble/boomright.png"));
         bubbleImageMap.put("bubble", bubbleImg);
+        bubbleImageMap.put("center", centerImg);
+        bubbleImageMap.put("horizontal", horizontalImg);
+        bubbleImageMap.put("vertical", verticalImg);
+        bubbleImageMap.put("up", upImg);
+        bubbleImageMap.put("down", downImg);
+        bubbleImageMap.put("left", leftImg);
+        bubbleImageMap.put("right", rightImg);
     }
 
     private static void initGameImageMap() throws IOException {
         ImageIcon iconImg = new ImageIcon("image/game/icon.jpg");
         ImageIcon beginBackgroundImg = new ImageIcon("image/game/beginbackground.jpg");
         ImageIcon beginButtonImg = new ImageIcon("image/game/beginbutton.png");
-        ImageIcon overBackgroundImg = new ImageIcon("image/game/overbackground.png");
+        ImageIcon loseBackgroundImg = new ImageIcon("image/game/YOU LOSE.png");
+        ImageIcon winBackgroundImg = new ImageIcon("image/game/YOU WIN.png");
         ImageIcon player01Img = new ImageIcon("image/game/player1.png");
         ImageIcon player02Img = new ImageIcon("image/game/player2.png");
         ImageIcon player03Img = new ImageIcon("image/game/player3.png");
@@ -96,7 +111,8 @@ public class ElementLoader {
         gameImageMap.put("icon", iconImg);
         gameImageMap.put("beginbackground", beginBackgroundImg);
         gameImageMap.put("beginbutton", beginButtonImg);
-        gameImageMap.put("overbackground", overBackgroundImg);
+        gameImageMap.put("overbackground", loseBackgroundImg);
+        gameImageMap.put("winbackground", winBackgroundImg);
         gameImageMap.put("player01card", player01Img);
         gameImageMap.put("player02card", player02Img);
         gameImageMap.put("player03card", player03Img);
