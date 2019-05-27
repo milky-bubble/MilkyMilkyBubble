@@ -24,6 +24,7 @@ public class GameJPanel extends JPanel implements Runnable{
     public GameJPanel() throws IOException {
         gameMap = new GameMap();
         offScreenImage = null;
+        this.setVisible(true);
         this.minute0 = 0;
         this.minute1 = 0;
         this.second0 = 0;
@@ -129,12 +130,11 @@ public class GameJPanel extends JPanel implements Runnable{
                     case KeyEvent.VK_DOWN: gameMap.getPlayer(1).setDirection(1); break;
                     case KeyEvent.VK_LEFT: gameMap.getPlayer(1).setDirection(2); break;
                     case KeyEvent.VK_RIGHT: gameMap.getPlayer(1).setDirection(3); break;
-                    case KeyEvent.VK_ENTER: gameMap.getPlayer(1).addBubble(); break;
+                    case KeyEvent.VK_SPACE: gameMap.getPlayer(1).addBubble(); break;
                     default: gameMap.getPlayer(1).setDirection(0);
                 }
             }
         });
-        this.setVisible(true);
     }
 
     @Override
@@ -157,8 +157,11 @@ public class GameJPanel extends JPanel implements Runnable{
             showTime();
             if(GameMap.getPlayer(1)==null || (timeCount>40*600 && highestScore()!=GameMap.getPlayer(1).getScore())) {
                 try {
+                    sleep(1000);
                     GameFrame.gameOver();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -166,20 +169,20 @@ public class GameJPanel extends JPanel implements Runnable{
             else if(timeCount>40*600 ||
                     ((GameMap.getPlayer(4)==null&&GameMap.getPlayer(2)==null&&GameMap.getPlayer(3)==null))) {
                 try {
+                    sleep(1000);
                     GameFrame.gameWin();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             }
 
-//            if(timeCount % (Config.BOARDER/Config.STEP) == 0)
-
             offScreenImage = this.createImage(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
             Graphics gOff = offScreenImage.getGraphics();
             gameMap.update();
             gameMap.drawMap(gOff);
-//            if(GameMap.getPlayer(1)!=null) GameMap.getPlayer(1).updateSelf(gOff);
             repaint();
             try {
                 sleep(20);

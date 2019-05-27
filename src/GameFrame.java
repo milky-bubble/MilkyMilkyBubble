@@ -43,31 +43,22 @@ public class GameFrame extends JFrame{
     }
 
     public static void startGame() throws IOException {
-        GameFrame.getGameFrame().setVisible(false);
         GameFrame.getGameFrame().setVisible(true);
-
         gameJPanel = new GameJPanel();
         contentPane.add("game", gameJPanel);
         layout.show(contentPane, "game");
-
         Thread gameThread = new Thread(gameJPanel);
         gameThread.start();
 
     }
 
     public static void gameOver() throws IOException {
-        GameFrame.getGameFrame().setVisible(false);
-        GameFrame.getGameFrame().setVisible(true);
-
         overJPanel = new LoseJPanel();
         contentPane.add("over", overJPanel);
         layout.show(contentPane, "over");
     }
 
     public static void gameWin() throws IOException {
-        GameFrame.getGameFrame().setVisible(false);
-        GameFrame.getGameFrame().setVisible(true);
-
         winJPanel = new WinJPanel();
         contentPane.add("win", winJPanel);
         layout.show(contentPane, "win");
