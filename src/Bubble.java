@@ -317,4 +317,6 @@ public class Bubble {
     public int getY() { return y; }
 
     public int getPower() { return power; }
+
+    public int getPlayerId(){return playerId;}
 }
