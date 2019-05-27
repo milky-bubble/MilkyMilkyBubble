@@ -183,9 +183,12 @@ public class GameJPanel extends JPanel implements Runnable{
             Graphics gOff = offScreenImage.getGraphics();
             gameMap.update();
             gameMap.drawMap(gOff);
+            if(GameMap.getPlayer(1)!=null) GameMap.getPlayer(1).updateSelf(gOff);
+            if(GameMap.getPlayer(2)!=null) GameMap.getPlayer(2).updateSelf(gOff);
+            if(GameMap.getPlayer(3)!=null) GameMap.getPlayer(3).updateSelf(gOff);
             repaint();
             try {
-                sleep(20);
+                sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

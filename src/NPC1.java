@@ -414,6 +414,8 @@ public class NPC1 extends Character{
         }
     }
 
+    private int timeCount = 0;
+
     private void nextStep() {
         /*
          * Down: return 1;
@@ -422,7 +424,7 @@ public class NPC1 extends Character{
          * Up: return 4;
          */
         //int path_count = 0;
-        if (count++ % 5 != 0)
+        if (timeCount++ % 10 != 0)
             return;
         //   path_count++;
         //    if (path_count > 4)
@@ -477,8 +479,7 @@ public class NPC1 extends Character{
     }
 
 
-    private int count = 0;
-    private int wait = 0;
+
     @Override
     public void move() {
         if(selfPath.isEmpty()) {
@@ -501,9 +502,6 @@ public class NPC1 extends Character{
                 }
             }
         }
-//        System.out.println(selfPath);
-//        System.out.println(x+" "+y);
         nextStep();
-//        System.out.println(x+" "+y);
     }
 }

@@ -500,31 +500,31 @@ public class NPC2 extends Character {
         return direction;*/
     }
 
-    private int count = 0;
+    private int timeCount = 0;
+
     @Override
     public void move() {
-        if (dead) return;
-        if (count++ % 5 != 0) return;
+        if (timeCount++ % 10 != 0) return;
         direction = nextStep();
 //        System.out.println("nextStep:direction");
         //System.out.println(direction);
-        switch (direction) {
-            case 4:
-                if (!crashUp()) y -= 1;
-                break;
-            case 1:
-                if (!crashDown()) y += 1;
-                break;
-            case 2:
-                if (!crashLeft()) x -= 1;
-                break;
-            case 3:
-                if (!crashRight()) x += 1;
-                break;
-        }
-        if (direction != 0 && direction != direction_cur) direction_cur = direction;
-        if (direction != 0) turn = (turn + 1) % 4;
-        direction = 0;
-        pickItem();
+//        switch (direction) {
+//            case 4:
+//                if (!crashUp()) y -= 1;
+//                break;
+//            case 1:
+//                if (!crashDown()) y += 1;
+//                break;
+//            case 2:
+//                if (!crashLeft()) x -= 1;
+//                break;
+//            case 3:
+//                if (!crashRight()) x += 1;
+//                break;
+//        }
+//        if (direction != 0 && direction != direction_cur) direction_cur = direction;
+//        if (direction != 0) turn = (turn + 1) % 4;
+//        direction = 0;
+//        pickItem();
     }
 }

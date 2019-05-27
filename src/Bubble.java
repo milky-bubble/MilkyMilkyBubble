@@ -107,12 +107,12 @@ public class Bubble {
             // Random Items
             if(!flag) {
                 Random rand = new Random();
-                if (rand.nextInt(100) > 95) {
-                    Item item = new Item(x, y + i, 0, 2);
+                if (rand.nextInt(100) > 85) {
+                    Item item = new Item(x, y + i, 0, rand.nextInt(3));
                     GameMap.getItems().add(item);
                 }
-                else if (rand.nextInt(100) > 60) {
-                    Item item = new Item(x, y + i, 0, rand.nextInt(3));
+                else if (rand.nextInt(200) > 199) {
+                    Item item = new Item(x, y + i, 0, 2);
                     GameMap.getItems().add(item);
                 }
             }
@@ -144,11 +144,11 @@ public class Bubble {
             // Random Items
             if(!flag) {
                 Random rand = new Random();
-                if (rand.nextInt(100) > 95) {
-                    Item item = new Item(x, y - i, 0, 2);
-                    GameMap.getItems().add(item);
-                } else if (rand.nextInt(100) > 60) {
+                if (rand.nextInt(100) > 85) {
                     Item item = new Item(x, y - i, 0, rand.nextInt(3));
+                    GameMap.getItems().add(item);
+                } else if (rand.nextInt(200) > 199) {
+                    Item item = new Item(x, y - i, 0, 2);
                     GameMap.getItems().add(item);
                 }
             }
@@ -181,11 +181,11 @@ public class Bubble {
             // Random Item
             if(!flag) {
                 Random rand = new Random();
-                if (rand.nextInt(100) > 95) {
-                    Item item = new Item(x + i, y, 0, 2);
-                    GameMap.getItems().add(item);
-                } else if (rand.nextInt(100) > 60) {
+                if (rand.nextInt(100) > 85) {
                     Item item = new Item(x + i, y, 0, rand.nextInt(3));
+                    GameMap.getItems().add(item);
+                } else if (rand.nextInt(200) > 199) {
+                    Item item = new Item(x + i, y, 0, 2);
                     GameMap.getItems().add(item);
                 }
             }
@@ -217,11 +217,11 @@ public class Bubble {
             // Random Item
             if(!flag) {
                 Random rand = new Random();
-                if (rand.nextInt(100) > 95) {
-                    Item item = new Item(x - i, y, 0, 2);
-                    GameMap.getItems().add(item);
-                } else if (rand.nextInt(100) > 60) {
+                if (rand.nextInt(100) > 85) {
                     Item item = new Item(x - i, y, 0, rand.nextInt(2));
+                    GameMap.getItems().add(item);
+                } else if (rand.nextInt(200) > 199) {
+                    Item item = new Item(x - i, y, 0, 2);
                     GameMap.getItems().add(item);
                 }
             }
