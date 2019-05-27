@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 
-public class NPC1 extends Character {
+public class NPC1 extends Character{
     boolean reach_player;
     boolean attack;
     int box_x, box_y;
@@ -22,15 +22,6 @@ public class NPC1 extends Character {
                 record[i][j] = true;
     }
 
-    /*public void pickItem() {
-        if(GameMap.getItems().isEmpty())
-            return;
-        box_x = GameMap.getItems().get(0).getX();
-        box_y = GameMap.getItems().get(0).getY();
-        GameMap.getBlock()[box_y][box_x].setWalkable(true);
-        super.pickItem();
-    }
-*/
     private boolean judgeEvade() {
         ArrayList<Bubble> bubbles = GameMap.getBubbles();
         MapBlock[][] mapBlock = GameMap.getBlock();
@@ -46,7 +37,7 @@ public class NPC1 extends Character {
 
             //left
             for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getX() - i < 0 || !mapBlock[temp.getY()][temp.getX() - i].isDestructible())
+                if (temp.getX() - i < 0 || !(mapBlock[temp.getY()][temp.getX() - i].isDestructible() || mapBlock[temp.getY()][temp.getX() - i].isWalkable()))
                     break;
                 else
                     explode_left = temp.getX() - i;
@@ -54,7 +45,7 @@ public class NPC1 extends Character {
 
             //right
             for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getX() + i >= Config.GAME_WIDTH || !mapBlock[temp.getY()][temp.getX() + i].isDestructible())
+                if (temp.getX() + i >= Config.GAME_WIDTH || !(mapBlock[temp.getY()][temp.getX() + i].isDestructible() || mapBlock[temp.getY()][temp.getX() + i].isWalkable()))
                     break;
                 else
                     explode_right = temp.getX() + i;
@@ -62,7 +53,7 @@ public class NPC1 extends Character {
 
             //up
             for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getY() - i < 0 || !mapBlock[temp.getY() - i][temp.getX()].isDestructible())
+                if (temp.getY() - i < 0 || !(mapBlock[temp.getY() - i][temp.getX()].isDestructible() || mapBlock[temp.getY() - i][temp.getX()].isWalkable()))
                     break;
                 else
                     explode_up = temp.getY() - i;
@@ -70,7 +61,7 @@ public class NPC1 extends Character {
 
             //down
             for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getY() + i >= Config.GAME_HEIGHT || !mapBlock[temp.getY() + i][temp.getX()].isDestructible())
+                if (temp.getY() + i >= Config.GAME_HEIGHT || !(mapBlock[temp.getY() + i][temp.getX()].isDestructible() || mapBlock[temp.getY() + i][temp.getX()].isWalkable()))
                     break;
                 else
                     explode_down = temp.getY() + i;
@@ -299,6 +290,8 @@ public class NPC1 extends Character {
 
         int search_count = 0;
 
+        System.out.println(option);
+
         while (!queue.isEmpty()) {
             search_count++;
             if (search_count > MAX_SEARCH_COUNT)
@@ -409,6 +402,13 @@ public class NPC1 extends Character {
                     } else
                         continue;
                 }
+                for(int i=0;i<Config.GAME_HEIGHT;i++) {
+                    for (int j = 0; j < Config.GAME_WIDTH; j++)
+                        System.out.print(temp_grid[i][j]);
+                    System.out.println();
+                }
+                System.out.println();
+
             }
         }
     }
@@ -420,16 +420,19 @@ public class NPC1 extends Character {
          * Right: return 3;
          * Up: return 4;
          */
-        int path_count = 0;
-        for (Pair<Integer, Integer> step : selfPath) {
-            if (count++ % 18 != 0) return;
-            path_count++;
-            if (path_count > 4)
-                break;
-
+        //int path_count = 0;
+        if (count++ % 5 != 0)
+            return;
+        //   path_count++;
+        //    if (path_count > 4)
+        // break;
+        Pair<Integer,Integer>step=null;
+        if(!selfPath.isEmpty()) {
+            step = selfPath.pop();
             int move_x = step.getKey() - x;
             int move_y = step.getValue() - y;
-
+//            System.out.println(move_x+" "+move_y);
+//            System.out.println(x+" "+y);
             if (move_x == 1)
                 npc_direction = 3;
             else if (move_x == -1)
@@ -460,36 +463,46 @@ public class NPC1 extends Character {
             pickItem();
         }
 
+
         if (attack) {
             if (tryBubble(x, y))
                 addBubble();
         } else {
             if (x == box_x && y == box_y)
-                if (tryBubble(x, y))
+                if (tryBubble(x, y)) {
                     addBubble();
+                }
         }
     }
 
 
     private int count = 0;
-
+    private int wait = 0;
     @Override
     public void move() {
-        if (dead) return;
-        computeSafeRegion();
-        findPath(GameMap.getPlayer1(), 0);
-        if (judgeEvade()) {
-            attack = false;
-            findPath(GameMap.getPlayer1(), 2);
-        } else {
-            if (!reach_player) {
+        if(selfPath.isEmpty()) {
+            if (dead) return;
+            computeSafeRegion();
+            findPath(GameMap.getPlayer1(), 0);
+            if (judgeEvade()) {
                 attack = false;
-                findPath(GameMap.getPlayer1(), 3);
+                findPath(GameMap.getPlayer1(), 2);
+                //nextStep();
             } else {
-                attack = true;
-                findPath(GameMap.getPlayer1(), 1);
+                if (!reach_player) {
+                    attack = false;
+                    findPath(GameMap.getPlayer1(), 3);
+                    //nextStep();
+                } else {
+                    attack = true;
+                    findPath(GameMap.getPlayer1(), 1);
+                    //nextStep();
+                }
             }
         }
+        System.out.println(selfPath);
+        System.out.println(x+" "+y);
         nextStep();
+        System.out.println(x+" "+y);
     }
 }
