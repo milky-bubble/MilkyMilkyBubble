@@ -115,4 +115,10 @@ public class GameMap {
     public static Character getPlayer1() {
         return player1;
     }
+
+    public static Character getPlayer2() { return player2; }
+
+    public static Character getPlayer3() { return player3; }
+
+    public static Character getPlayer4() { return player4; }
 }
