@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 
-public class NPC1 extends Character{
-    boolean reach_player;
+public class NPC1 extends Character {
+    boolean reach_player1, reach_player3, reach_player4;
     boolean attack;
     int box_x, box_y;
     int npc_direction;
@@ -15,7 +15,10 @@ public class NPC1 extends Character{
 
     public NPC1(int x, int y, int id, BufferedImage image, int direction) {
         super(x, y, id, image, direction);
-        reach_player = false;
+        reach_player1 = false;
+        reach_player3 = false;
+        reach_player4 = false;
+
         attack = false;
         for (int i = 0; i < Config.GAME_HEIGHT; i++)
             for (int j = 0; j < Config.GAME_WIDTH; j++)
@@ -338,8 +341,16 @@ public class NPC1 extends Character{
             //whether reachable
             if (option == 0)
                 if (cur.getKey() == player.getX() && cur.getValue() == player.getY()) {
-                    reach_player = true;
-                    return;
+                    if (player.id == 1) {
+                        reach_player1 = true;
+                        return;
+                    } else if (player.id == 3) {
+                        reach_player3 = true;
+                        return;
+                    } else if (player.id == 4) {
+                        reach_player4 = true;
+                        return;
+                    }
                 }
 
             //find player
@@ -431,13 +442,12 @@ public class NPC1 extends Character{
          * Up: return 4;
          */
         //int path_count = 0;
-        if (timeCount++ % 10 != 0)
-            return;
+
         //   path_count++;
         //    if (path_count > 4)
         // break;
-        Pair<Integer,Integer>step=null;
-        if(!selfPath.isEmpty()) {
+        Pair<Integer, Integer> step = null;
+        if (!selfPath.isEmpty()) {
             step = selfPath.pop();
             int move_x = step.getKey() - x;
             int move_y = step.getValue() - y;
@@ -453,24 +463,25 @@ public class NPC1 extends Character{
                 npc_direction = 4;
 
             direction = npc_direction;
-            switch (direction) {
-                case 4:
-                    if (!crashUp()) y -= 1;
-                    break;
-                case 1:
-                    if (!crashDown()) y += 1;
-                    break;
-                case 2:
-                    if (!crashLeft()) x -= 1;
-                    break;
-                case 3:
-                    if (!crashRight()) x += 1;
-                    break;
-            }
-            if (direction != 0 && direction != direction_cur) direction_cur = direction;
-            if (direction != 0) turn = (turn + 1) % 4;
-            direction = 0;
-            pickItem();
+//            switch (direction) {
+//                case 4:
+//                    if (!crashUp()) y -= 1;
+//                    break;
+//                case 1:
+//                    if (!crashDown()) y += 1;
+//                    break;
+//                case 2:
+//                    if (!crashLeft()) x -= 1;
+//                    break;
+//                case 3:
+//                    if (!crashRight()) x += 1;
+//                    break;
+//            }
+//            if (direction != 0 && direction != direction_cur) direction_cur = direction;
+//            if (direction != 0) turn = (turn + 1) % 4;
+//            direction = 0;
+//            pickItem();
+
         }
 
 
@@ -486,25 +497,43 @@ public class NPC1 extends Character{
     }
 
 
-
     @Override
     public void move() {
-        if(selfPath.isEmpty()) {
+        if (timeCount++ % 10 != 0)
+            return;
+        if (selfPath.isEmpty()) {
             if (dead) return;
             computeSafeRegion();
-            findPath(GameMap.getPlayer1(), 0);
+            if (GameMap.getPlayer1() != null)
+                findPath(GameMap.getPlayer1(), 0);
+            if (GameMap.getPlayer3() != null)
+                findPath(GameMap.getPlayer3(), 0);
+            if (GameMap.getPlayer4() != null)
+                findPath(GameMap.getPlayer4(), 0);
             if (judgeEvade()) {
                 attack = false;
-                findPath(GameMap.getPlayer1(), 2);
+                if (GameMap.getPlayer1() != null)
+                    findPath(GameMap.getPlayer1(), 2);
+                else if (GameMap.getPlayer3() != null)
+                    findPath(GameMap.getPlayer3(), 2);
+                else if (GameMap.getPlayer4() != null)
+                    findPath(GameMap.getPlayer4(), 2);
+                else
+                    findPath(GameMap.getPlayer2(), 2);
                 //nextStep();
             } else {
-                if (!reach_player) {
-                    attack = false;
-                    findPath(GameMap.getPlayer1(), 3);
-                    //nextStep();
-                } else {
+                if (reach_player1) {
                     attack = true;
                     findPath(GameMap.getPlayer1(), 1);
+                } else if (reach_player3) {
+                    attack = true;
+                    findPath(GameMap.getPlayer3(), 1);
+                } else if (reach_player4) {
+                    attack = true;
+                    findPath(GameMap.getPlayer4(), 1);
+                } else {
+                    attack = false;
+                    findPath(GameMap.getPlayer1(), 3);
                     //nextStep();
                 }
             }
