@@ -181,11 +181,11 @@ public class GameJPanel extends JPanel implements Runnable{
 
             offScreenImage = this.createImage(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT+ Config.BOARDER);
             Graphics gOff = offScreenImage.getGraphics();
-            gameMap.update();
             gameMap.drawMap(gOff);
             if(GameMap.getPlayer(1)!=null) GameMap.getPlayer(1).updateSelf(gOff);
-//            if(GameMap.getPlayer(2)!=null) GameMap.getPlayer(2).updateSelf(gOff);
+            if(GameMap.getPlayer(2)!=null) GameMap.getPlayer(2).updateSelf(gOff);
             if(GameMap.getPlayer(3)!=null) GameMap.getPlayer(3).updateSelf(gOff);
+            if(GameMap.getPlayer(4)!=null) GameMap.getPlayer(4).updateSelf(gOff);
             repaint();
             try {
                 sleep(20);

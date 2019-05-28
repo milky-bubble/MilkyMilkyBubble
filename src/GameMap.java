@@ -68,19 +68,6 @@ public class GameMap {
             bubble.drawSelf(g, bubbleImg, bubbleImg.getWidth(), bubbleImg.getHeight());
         }
 
-        // Draw Players
-//        if (player1 != null) player1.drawSelf(g, 1);
-        if (player2 != null) player2.drawSelf(g, 2);
-//        if (player3 != null) player3.drawSelf(g, 3);
-        if (player4 != null) player4.drawSelf(g, 4);
-    }
-
-    // Player Move
-    public void update() {
-//        if(player1 != null) player1.move();
-        if(player2 != null) player2.move();
-//        if(player3 != null) player3.move();
-        if(player4 != null) player4.move();
     }
 
     // Getters & Setters
