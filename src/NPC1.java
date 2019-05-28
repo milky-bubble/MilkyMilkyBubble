@@ -522,18 +522,18 @@ public class NPC1 extends Character {
                     findPath(GameMap.getPlayer2(), 2);
                 //nextStep();
             } else {
-                if (reach_player1) {
-                    attack = true;
-                    findPath(GameMap.getPlayer1(), 1);
-                } else if (reach_player3) {
-                    attack = true;
+                if (reach_player1&&GameMap.getPlayer(1)!=null) {
+                        attack = true;
+                        findPath(GameMap.getPlayer1(), 1);
+                    } else if (reach_player3&&GameMap.getPlayer(3)!=null) {
+                        attack = true;
                     findPath(GameMap.getPlayer3(), 1);
-                } else if (reach_player4) {
+                } else if (reach_player4&&GameMap.getPlayer(4)!=null) {
                     attack = true;
                     findPath(GameMap.getPlayer4(), 1);
                 } else {
                     attack = false;
-                    findPath(GameMap.getPlayer1(), 3);
+                    if(GameMap.getPlayer(1)!=null) findPath(GameMap.getPlayer1(), 3);
                     //nextStep();
                 }
             }
