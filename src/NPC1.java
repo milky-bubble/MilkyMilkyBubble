@@ -403,6 +403,13 @@ public class NPC1 extends Character{
                     } else
                         continue;
                 }
+                /*for(int i=0;i<Config.GAME_HEIGHT;i++) {
+                    for (int j = 0; j < Config.GAME_WIDTH; j++)
+                        System.out.print(temp_grid[i][j]);
+                    System.out.println();
+                }
+                System.out.println();
+                */
 //                for(int i=0;i<Config.GAME_HEIGHT;i++) {
 //                    for (int j = 0; j < Config.GAME_WIDTH; j++)
 //                        System.out.print(temp_grid[i][j]);
