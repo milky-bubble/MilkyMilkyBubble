@@ -6,6 +6,7 @@ public class MapBlock {
     private String id;
     private boolean destructible;
     private boolean walkable;
+    private boolean hasBubble;
 
     // Constructor
     public MapBlock(BufferedImage image, String id, int x, int y, boolean destructible, boolean walkable) {
@@ -15,6 +16,7 @@ public class MapBlock {
         this.y = y;
         this.destructible = destructible;
         this.walkable = walkable;
+        this.hasBubble = false;
     }
 
     // Getters & Setters
@@ -31,5 +33,13 @@ public class MapBlock {
 
     public void setWalkable(boolean walkable) {
         this.walkable = walkable;
+    }
+
+    public boolean isHasBubble() {
+        return hasBubble;
+    }
+
+    public void setHasBubble(boolean hasBubble) {
+        this.hasBubble = hasBubble;
     }
 }

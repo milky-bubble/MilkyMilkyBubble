@@ -32,43 +32,90 @@ public class Character {
         this.bubblePower = 1;
         this.life = 1;
         this.score = 0;
-        this.count = 0;
+        this.count = 10;
     }
 
     MapBlock[][] mb = GameMap.getBlock();
 
     public void updateSelf(Graphics g) {
-    }
+        move();
+        if(direction != 0 && count > 5) {
+            count = 0;
+            direction_cur = direction;
+            direction = 0;
+        }
+        count++;
+        int dx1 = x * Config.BLOCK_SIZE;
+        int dy1 = y * Config.BLOCK_SIZE;
+        int dx2 = dx1 + Config.BLOCK_SIZE;
+        int dy2 = dy1 + Config.BLOCK_SIZE;
+        int sx1 = turn * image.getWidth() / 4;
+        int sy1 = (direction_cur - 1) * image.getHeight()/4;
+        int sx2 = sx1 + image.getWidth() / 4;
+        int sy2 = sy1 + image.getHeight()/4;
+        if(count>5) {
+            g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+            return;
+        }
+        switch(direction_cur) {
+            case 4:
+                if (!crashUp()) {
+                    dy1 -= count * Config.STEP;
+                    dy2 -= count * Config.STEP;
+                    turn = (turn + 1) % 4;
+                    g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+                    if (count == 5) {
+                        y -= 1;
+                        pickItem();
+                    }
+                }
+                else g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 
-//    public void move() {
-//        if(dead) return;
-//        switch(direction) {
-//            case 4:
-//                if(!crashUp()) {
-//                    y -= 1;
-//                }
-//                break;
-//            case 1:
-//                if(!crashDown()) {
-//                    y += 1;
-//                }
-//                break;
-//            case 2:
-//                if(!crashLeft()) {
-//                    x -= 1;
-//                }
-//                break;
-//            case 3:
-//                if(!crashRight()) {
-//                    x += 1;
-//                }
-//                break;
-//        }
-//        if(direction != 0) direction_cur = direction;
-//        if(direction != 0) turn = (turn + 1) % 4;
-//        direction = 0;
-//        pickItem();
-//    }
+                break;
+            case 1:
+                if (!crashDown()) {
+                    dy1 += count * Config.STEP;
+                    dy2 += count * Config.STEP;
+                    turn = (turn + 1) % 4;
+                    g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+                    if (count == 5) {
+                        y += 1;
+                        pickItem();
+                    }
+                }
+                else g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+
+                break;
+            case 2:
+                if (!crashLeft()) {
+                    dx1 -= count * Config.STEP;
+                    dx2 -= count * Config.STEP;
+                    turn = (turn + 1) % 4;
+                    g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+                    if (count == 5) {
+                        x -= 1;
+                        pickItem();
+                    }
+                }
+                else g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+
+                break;
+            case 3:
+                if (!crashRight()) {
+                    dx1 += count * Config.STEP;
+                    dx2 += count * Config.STEP;
+                    turn = (turn + 1) % 4;
+                    g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+                    if (count == 5) {
+                        x += 1;
+                        pickItem();
+                    }
+                }
+                else g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+                break;
+        }
+
+    }
 
     public void drawSelf(Graphics g, int id) {
         BufferedImage image = ElementLoader.playerImageMap.get(id);
@@ -82,26 +129,7 @@ public class Character {
         int sy2 = sy1 + image.getHeight()/4;
         g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
     }
-//    public void drawSelf(Graphics g, int id) {
-//        BufferedImage image = ElementLoader.playerImageMap.get(id);
-//
-//        int dx1 = x * Config.BLOCK_SIZE;
-//        int dy1 = y * Config.BLOCK_SIZE;
-//
-//        if(direction == 1 && !crashDown()) dy1 += (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
-//        else if(direction == 2 && !crashLeft()) dx1 -= (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
-//        else if(direction == 3 && !crashRight()) dx1 += (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
-//        else if(direction == 4 && !crashUp()) dy1 -= (count*1.0/Config.STEP)*Config.BLOCK_SIZE;
-//        int dx2 = dx1 + Config.BLOCK_SIZE;
-//        int dy2 = dy1 + Config.BLOCK_SIZE;
-//        int sx1 = turn * image.getWidth() / 4;
-//        int sy1 = (direction_cur - 1) * image.getHeight()/4;
-//        int sx2 = sx1 + image.getWidth() / 4;
-//        int sy2 = sy1 + image.getHeight()/4;
-//
-//        g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
-//
-//    }
+
 
     public void addBubble() {
         if(dead) return;
@@ -109,7 +137,8 @@ public class Character {
         Bubble b = new Bubble(x, y, bubblePower, id, GameJPanel.timeCount);
         bubbleNum++;
         GameMap.getBubbles().add(b);
-        mb[y][x].setWalkable(false);
+        mb[y][x].setHasBubble(true);
+//        mb[y][x].setWalkable(false);
         // b.lastForCertainTime();
     }
 
@@ -127,25 +156,25 @@ public class Character {
 
     public boolean crashDown() {
         if(y+1>=Config.GAME_HEIGHT) return true;
-        if(!mb[y+1][x].isWalkable()) return true;
+        if(!mb[y+1][x].isWalkable() || mb[y+1][x].isHasBubble()) return true;
         return false;
     }
 
     public boolean crashUp() {
         if(y-1<0)return true;
-        if(!mb[y-1][x].isWalkable()) return true;
+        if(!mb[y-1][x].isWalkable() || mb[y-1][x].isHasBubble()) return true;
         return false;
     }
 
     public boolean crashLeft() {
         if(x-1<0)return true;
-        if(!mb[y][x-1].isWalkable()) return true;
+        if(!mb[y][x-1].isWalkable() || mb[y][x-1].isHasBubble()) return true;
         return false;
     }
 
     public boolean crashRight() {
         if(x+1>=Config.GAME_WIDTH) return true;
-        if(!mb[y][x+1].isWalkable()) return true;
+        if(!mb[y][x+1].isWalkable() || mb[y][x+1].isHasBubble()) return true;
         return false;
     }
 

@@ -43,12 +43,13 @@ public class NPC2 extends Character {
         }
         ArrayList<Bubble> bubbleList=GameMap.getBubbles();
         MapBlock[][] block=GameMap.getBlock();
-        for(Bubble tmp:bubbleList){
+        ArrayList<Bubble> bubbleList0=(ArrayList<Bubble>)bubbleList.clone();
+        for(Bubble tmp:bubbleList0){
             if(tmp.isAlive()) {
                 //System.out.println(tmp.getX()+" "+tmp.getY());
                 Point bubbleLoc = new Point(tmp.getX(), tmp.getY());
                 int power = tmp.getPower();
-                System.out.println("power:"+power);
+//                System.out.println("power:"+power);
                 dangerZone[bubbleLoc.x][bubbleLoc.y] = DANGER_MARKER;
                 for (int i=bubbleLoc.x-1;i >= Math.max(0, bubbleLoc.x - power); i--) {
                     if (block[bubbleLoc.y][i].isDestructible()||block[bubbleLoc.y][i].isWalkable()) {
@@ -121,7 +122,7 @@ public class NPC2 extends Character {
         //start to find
         while(!queue.isEmpty()) {
             Point fPoint = queue.poll();
-            System.out.println(fPoint.x+" "+fPoint.y);
+//            System.out.println(fPoint.x+" "+fPoint.y);
             //if the area is safe and walkable then the road is find
             visited[fPoint.x][fPoint.y] = true;
             if (block[fPoint.y][fPoint.x].isWalkable() && !dangerZone[fPoint.x][fPoint.y].equals(DANGER_MARKER)
@@ -280,8 +281,8 @@ public class NPC2 extends Character {
             Random rand2=new Random();
             dj=rand2.nextInt(14);
         }while(dangerZone[di][dj].equals(DANGER_MARKER)||(!block[dj][di].isWalkable() && !block[dj][di].isDestructible()));
-        System.out.println("destination:"+di+" "+dj);
-        System.out.println("find the destination");
+//        System.out.println("destination:"+di+" "+dj);
+//        System.out.println("find the destination");
         BFS(di,dj,dangerZone);
     }
 
@@ -299,7 +300,7 @@ public class NPC2 extends Character {
             if(i!=2 && player[i]!=null)
             {
                 if(BFS(player[i].getX(),player[i].getY(),dangerZone)){
-                    System.out.println("find the player");
+//                    System.out.println("find the player");
                     break;
                 }
             }
@@ -332,7 +333,7 @@ public class NPC2 extends Character {
                 ty=fPoint.y+next[i][1];
                 if(!outOfBound(tx,ty)) {
                     if(tx==x && ty==y && block[ty][tx].isDestructible()){
-                        System.out.println("there is obstacle");
+//                        System.out.println("there is obstacle");
                         if(findSafePathAfterBFS(fPoint.x,fPoint.y)){
                             Point tPoint = new Point(tx, ty);
                             tPoint.path.addAll(fPoint.path);
@@ -344,7 +345,7 @@ public class NPC2 extends Character {
                             && block[ty][tx].isWalkable() && !judgeLocBubble(tx,ty)) {
                                 Point tPoint = new Point(tx, ty);
                                 tPoint.path.addAll(fPoint.path);
-                                System.out.println("direction "+i+1);
+//                                System.out.println("direction "+i+1);
                                 tPoint.path.addElement(i + 1);
                                 queue.add(tPoint);
                     }
@@ -423,7 +424,7 @@ public class NPC2 extends Character {
         String[][] dangerZone = getDangerZone();
         int[][] next={{0,0},{0,1},{-1,0},{1,0},{0,-1}};//the direction of the next step
         if (dangerZone[this.x][this.y].equals(DANGER_MARKER)) {
-            System.out.println("dangerous!");
+//            System.out.println("dangerous!");
             boolean findResult = findSafePath();
             //can not go
             if (!findResult) {
@@ -437,9 +438,9 @@ public class NPC2 extends Character {
             System.out.print("\n");
         }*/
         else if(ifAttackPlayer()){
-            System.out.println("yes");
+//            System.out.println("yes");
             if(CountBubble()>=0 && CountBubble()<=1){
-                System.out.println(CountBubble());
+//                System.out.println(CountBubble());
                 if(findSafePathAfter())
                 {
                     addBubble();
@@ -453,7 +454,8 @@ public class NPC2 extends Character {
             int count=0;
             do{
                 count++;
-                System.out.println("empty!");
+//
+//                .out.println("empty!");
                 randomFindPath();
 
             }while(path.isEmpty() && count<=500);
@@ -469,7 +471,7 @@ public class NPC2 extends Character {
                 if (!outOfBound(this.x+next[direction][0],this.y+next[direction][1])
                         && !dangerZone[this.x+next[direction][0]][this.y+next[direction][1]].equals(DANGER_MARKER)) {
                     path.addElement(direction);
-                    System.out.println("add random");
+//                    System.out.println("add random");
                 }
             }
         }
@@ -491,38 +493,38 @@ public class NPC2 extends Character {
                 return 0;
             }
         }
-        System.out.println(next_Move);
+//        System.out.println(next_Move);
         return next_Move;
         /*Random rand=new Random();
         int direction=rand.nextInt(4);
         return direction;*/
     }
 
-    private int count = 0;
+    private int timeCount = 0;
+
     @Override
     public void move() {
-        if (dead) return;
-        if (count++ % 5 != 0) return;
+        if (timeCount++ % 10 != 0) return;
         direction = nextStep();
-        System.out.println("nextStep:direction");
+//        System.out.println("nextStep:direction");
         //System.out.println(direction);
-        switch (direction) {
-            case 4:
-                if (!crashUp()) y -= 1;
-                break;
-            case 1:
-                if (!crashDown()) y += 1;
-                break;
-            case 2:
-                if (!crashLeft()) x -= 1;
-                break;
-            case 3:
-                if (!crashRight()) x += 1;
-                break;
-        }
-        if (direction != 0 && direction != direction_cur) direction_cur = direction;
-        if (direction != 0) turn = (turn + 1) % 4;
-        direction = 0;
-        pickItem();
+//        switch (direction) {
+//            case 4:
+//                if (!crashUp()) y -= 1;
+//                break;
+//            case 1:
+//                if (!crashDown()) y += 1;
+//                break;
+//            case 2:
+//                if (!crashLeft()) x -= 1;
+//                break;
+//            case 3:
+//                if (!crashRight()) x += 1;
+//                break;
+//        }
+//        if (direction != 0 && direction != direction_cur) direction_cur = direction;
+//        if (direction != 0) turn = (turn + 1) % 4;
+//        direction = 0;
+//        pickItem();
     }
 }

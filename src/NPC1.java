@@ -87,7 +87,8 @@ public class NPC1 extends Character{
                     if (bubbles.isEmpty())
                         record[i][j] = true;
 
-                    for (Bubble temp : bubbles) {
+                    ArrayList<Bubble> bubbles0 = (ArrayList<Bubble>) bubbles.clone();
+                    for (Bubble temp : bubbles0) {
                         if (!temp.isAlive())
                             continue;
 
@@ -290,7 +291,7 @@ public class NPC1 extends Character{
 
         int search_count = 0;
 
-        System.out.println(option);
+//        System.out.println(option);
 
         while (!queue.isEmpty()) {
             search_count++;
@@ -409,10 +410,18 @@ public class NPC1 extends Character{
                 }
                 System.out.println();
                 */
+//                for(int i=0;i<Config.GAME_HEIGHT;i++) {
+//                    for (int j = 0; j < Config.GAME_WIDTH; j++)
+//                        System.out.print(temp_grid[i][j]);
+//                    System.out.println();
+//                }
+//                System.out.println();
 
             }
         }
     }
+
+    private int timeCount = 0;
 
     private void nextStep() {
         /*
@@ -422,7 +431,7 @@ public class NPC1 extends Character{
          * Up: return 4;
          */
         //int path_count = 0;
-        if (count++ % 5 != 0)
+        if (timeCount++ % 10 != 0)
             return;
         //   path_count++;
         //    if (path_count > 4)
@@ -477,8 +486,7 @@ public class NPC1 extends Character{
     }
 
 
-    private int count = 0;
-    private int wait = 0;
+
     @Override
     public void move() {
         if(selfPath.isEmpty()) {
