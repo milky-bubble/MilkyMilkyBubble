@@ -1,15 +1,16 @@
 import javafx.util.Pair;
 
-import java.sql.*;
-import java.awt.*;
-import java.util.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class NPC1 extends Character {
     boolean reach_player1, reach_player3, reach_player4;
     boolean attack;
     int box_x, box_y;
     int npc_direction;
+    boolean judgeEvade;
     boolean[][] record = new boolean[Config.GAME_HEIGHT][Config.GAME_WIDTH];
     LinkedList<Pair<Integer, Integer>> selfPath = new LinkedList<Pair<Integer, Integer>>();
 
@@ -25,58 +26,6 @@ public class NPC1 extends Character {
                 record[i][j] = true;
     }
 
-    private boolean judgeEvade() {
-        ArrayList<Bubble> bubbles = GameMap.getBubbles();
-        MapBlock[][] mapBlock = GameMap.getBlock();
-
-        for (Bubble temp : bubbles) {
-            int explode_up = temp.getY();
-            int explode_down = temp.getY();
-            int explode_left = temp.getX();
-            int explode_right = temp.getX();
-
-            if (!temp.isAlive())
-                continue;
-
-            //left
-            for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getX() - i < 0 || !(mapBlock[temp.getY()][temp.getX() - i].isDestructible() || mapBlock[temp.getY()][temp.getX() - i].isWalkable()))
-                    break;
-                else
-                    explode_left = temp.getX() - i;
-            }
-
-            //right
-            for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getX() + i >= Config.GAME_WIDTH || !(mapBlock[temp.getY()][temp.getX() + i].isDestructible() || mapBlock[temp.getY()][temp.getX() + i].isWalkable()))
-                    break;
-                else
-                    explode_right = temp.getX() + i;
-            }
-
-            //up
-            for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getY() - i < 0 || !(mapBlock[temp.getY() - i][temp.getX()].isDestructible() || mapBlock[temp.getY() - i][temp.getX()].isWalkable()))
-                    break;
-                else
-                    explode_up = temp.getY() - i;
-            }
-
-            //down
-            for (int i = 1; i <= temp.getPower(); i++) {
-                if (temp.getY() + i >= Config.GAME_HEIGHT || !(mapBlock[temp.getY() + i][temp.getX()].isDestructible() || mapBlock[temp.getY() + i][temp.getX()].isWalkable()))
-                    break;
-                else
-                    explode_down = temp.getY() + i;
-            }
-
-            if (((y >= explode_up) && (y <= explode_down) && x == temp.getX()) || (x >= explode_left) && (x <= explode_right) && y == temp.getY())
-                return true;
-            else
-                continue;
-        }
-        return false;
-    }
 
     private void computeSafeRegion() {
         MapBlock[][] mapBlock = GameMap.getBlock();
@@ -137,10 +86,15 @@ public class NPC1 extends Character {
                 } else
                     record[i][j] = false;
             }
+        judgeEvade = !record[y][x];
     }
 
     private boolean tryBubble(int x, int y) {
         MapBlock[][] mapBlock = GameMap.getBlock();
+        if(x-1>0&&mapBlock[y][x-1].isHasBubble()||x+1< Config.GAME_WIDTH-1&&mapBlock[y][x+1].isHasBubble()||y-1>0&&mapBlock[y-1][x].isHasBubble()||y+1< Config.GAME_HEIGHT-1&&mapBlock[y+1][x].isHasBubble())
+            return false;
+        else if(x-2>0&&mapBlock[y][x-2].isHasBubble()||x+2< Config.GAME_WIDTH-1&&mapBlock[y][x+2].isHasBubble()||y-2>0&&mapBlock[y-2][x].isHasBubble()||y+2< Config.GAME_HEIGHT-1&&mapBlock[y+2][x].isHasBubble())
+            return false;
 
         int explode_up = y;
         int explode_down = y;
@@ -273,7 +227,6 @@ public class NPC1 extends Character {
 
         return false;
     }
-
     private void findPath(Character player, int option) {
         MapBlock[][] mapBlock = GameMap.getBlock();
 
@@ -441,11 +394,6 @@ public class NPC1 extends Character {
          * Right: return 3;
          * Up: return 4;
          */
-        //int path_count = 0;
-
-        //   path_count++;
-        //    if (path_count > 4)
-        // break;
         Pair<Integer, Integer> step = null;
         if (!selfPath.isEmpty()) {
             step = selfPath.pop();
@@ -484,14 +432,16 @@ public class NPC1 extends Character {
 
         }
 
-
         if (attack) {
-            if (tryBubble(x, y))
+            if (tryBubble(x, y)) {
                 addBubble();
+                //computeSafeRegion();
+            }
         } else {
             if (x == box_x && y == box_y)
                 if (tryBubble(x, y)) {
                     addBubble();
+                    //computeSafeRegion();
                 }
         }
     }
@@ -501,43 +451,52 @@ public class NPC1 extends Character {
     public void move() {
         if (timeCount++ % 10 != 0)
             return;
-        if (selfPath.isEmpty()) {
-            if (dead) return;
-            computeSafeRegion();
+        // if (selfPath.isEmpty()) {
+        if (dead) return;
+        computeSafeRegion();
+        //if (GameMap.getPlayer1() != null)
+        //    findPath(GameMap.getPlayer1(), 0);
+        //else if (GameMap.getPlayer3() != null)
+        //    findPath(GameMap.getPlayer3(), 0);
+        //else if (GameMap.getPlayer4() != null)
+        //    findPath(GameMap.getPlayer4(), 0);
+        if (judgeEvade) {
+            attack = false;
             if (GameMap.getPlayer1() != null)
+                findPath(GameMap.getPlayer1(), 2);
+                //else if (GameMap.getPlayer3() != null)
+                //findPath(GameMap.getPlayer3(), 2);
+                //else if (GameMap.getPlayer4() != null)
+                //findPath(GameMap.getPlayer4(), 2);
+            else
+                findPath(GameMap.getPlayer2(), 2);
+            //nextStep();
+        }
+        else {
+            if(GameMap.getPlayer1()!=null)
                 findPath(GameMap.getPlayer1(), 0);
-            if (GameMap.getPlayer3() != null)
-                findPath(GameMap.getPlayer3(), 0);
-            if (GameMap.getPlayer4() != null)
-                findPath(GameMap.getPlayer4(), 0);
-            if (judgeEvade()) {
-                attack = false;
-                if (GameMap.getPlayer1() != null)
-                    findPath(GameMap.getPlayer1(), 2);
-                else if (GameMap.getPlayer3() != null)
-                    findPath(GameMap.getPlayer3(), 2);
-                else if (GameMap.getPlayer4() != null)
-                    findPath(GameMap.getPlayer4(), 2);
-                else
-                    findPath(GameMap.getPlayer2(), 2);
-                //nextStep();
-            } else {
-                if (reach_player1&&GameMap.getPlayer(1)!=null) {
+            if (reach_player1&& GameMap.getPlayer1()!=null) {
+                attack = true;
+                findPath(GameMap.getPlayer1(), 1);
+            }
+                /*else if (reach_player3&&GameMap.getPlayer3()!=null) {
                         attack = true;
-                        findPath(GameMap.getPlayer1(), 1);
-                    } else if (reach_player3&&GameMap.getPlayer(3)!=null) {
-                        attack = true;
-                    findPath(GameMap.getPlayer3(), 1);
-                } else if (reach_player4&&GameMap.getPlayer(4)!=null) {
+                        findPath(GameMap.getPlayer3(), 1);
+                }
+                else if (reach_player4&&GameMap.getPlayer4()!=null) {
                     attack = true;
                     findPath(GameMap.getPlayer4(), 1);
-                } else {
-                    attack = false;
-                    if(GameMap.getPlayer(1)!=null) findPath(GameMap.getPlayer1(), 3);
-                    //nextStep();
-                }
+                }*/
+            else {
+                attack = false;
+                if(GameMap.getPlayer(1)!=null)
+                    findPath(GameMap.getPlayer1(), 3);
+                else
+                    findPath(GameMap.getPlayer2(),3);
+                //nextStep();
             }
         }
+        //}
         nextStep();
     }
 }
