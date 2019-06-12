@@ -90,8 +90,6 @@ public class NPC1 extends Character {
     }
 
     private boolean tryBubble(int x, int y) {
-        if(bubbleNum>2)
-            return false;
         MapBlock[][] mapBlock = GameMap.getBlock();
         if(x-1>0&&mapBlock[y][x-1].isHasBubble()||x+1<Config.GAME_WIDTH-1&&mapBlock[y][x+1].isHasBubble()||y-1>0&&mapBlock[y-1][x].isHasBubble()||y+1<Config.GAME_HEIGHT-1&&mapBlock[y+1][x].isHasBubble())
             return false;
@@ -229,7 +227,6 @@ public class NPC1 extends Character {
 
         return false;
     }
-
     private void findPath(Character player, int option) {
         MapBlock[][] mapBlock = GameMap.getBlock();
 
@@ -397,11 +394,6 @@ public class NPC1 extends Character {
          * Right: return 3;
          * Up: return 4;
          */
-        //int path_count = 0;
-
-        //   path_count++;
-        //    if (path_count > 4)
-        // break;
         Pair<Integer, Integer> step = null;
         if (!selfPath.isEmpty()) {
             step = selfPath.pop();
@@ -440,17 +432,20 @@ public class NPC1 extends Character {
 
         }
 
-
         if (attack) {
-            if (tryBubble(x, y))
+            if (tryBubble(x, y)) {
                 addBubble();
+                //computeSafeRegion();
+            }
         } else {
             if (x == box_x && y == box_y)
                 if (tryBubble(x, y)) {
                     addBubble();
+                    //computeSafeRegion();
                 }
         }
     }
+
 
     @Override
     public void move() {
@@ -505,4 +500,3 @@ public class NPC1 extends Character {
         nextStep();
     }
 }
-
