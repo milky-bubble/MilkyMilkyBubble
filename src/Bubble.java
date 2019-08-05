@@ -31,10 +31,10 @@ public class Bubble {
 
     public void lastForCertainTime() {
         if(GameJPanel.timeCount-startTime == 50) {
+            alive = false;
             Character cur = GameMap.getPlayer(playerId);
             if(cur!=null) cur.setBubbleNum(cur.getBubbleNum()-1);
             bubbleExplode();
-            alive = false;
             GameMap.getBlock()[y][x].setHasBubble(false);
         }
     }

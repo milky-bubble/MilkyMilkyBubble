@@ -91,15 +91,9 @@ public class NPC1 extends Character {
 
     private boolean tryBubble(int x, int y) {
         MapBlock[][] mapBlock = GameMap.getBlock();
-
         if(x-1>0&&mapBlock[y][x-1].isHasBubble()||x+1< Config.GAME_WIDTH-1&&mapBlock[y][x+1].isHasBubble()||y-1>0&&mapBlock[y-1][x].isHasBubble()||y+1< Config.GAME_HEIGHT-1&&mapBlock[y+1][x].isHasBubble())
             return false;
         else if(x-2>0&&mapBlock[y][x-2].isHasBubble()||x+2< Config.GAME_WIDTH-1&&mapBlock[y][x+2].isHasBubble()||y-2>0&&mapBlock[y-2][x].isHasBubble()||y+2< Config.GAME_HEIGHT-1&&mapBlock[y+2][x].isHasBubble())
-
-        if(x-1>0&&mapBlock[y][x-1].isHasBubble()||x+1<Config.GAME_WIDTH-1&&mapBlock[y][x+1].isHasBubble()||y-1>0&&mapBlock[y-1][x].isHasBubble()||y+1<Config.GAME_HEIGHT-1&&mapBlock[y+1][x].isHasBubble())
-            return false;
-        else if(x-2>0&&mapBlock[y][x-2].isHasBubble()||x+2<Config.GAME_WIDTH-1&&mapBlock[y][x+2].isHasBubble()||y-2>0&&mapBlock[y-2][x].isHasBubble()||y+2<Config.GAME_HEIGHT-1&&mapBlock[y+2][x].isHasBubble())
-
             return false;
 
         int explode_up = y;
@@ -481,11 +475,7 @@ public class NPC1 extends Character {
         else {
             if(GameMap.getPlayer1()!=null)
                 findPath(GameMap.getPlayer1(), 0);
-
             if (reach_player1&& GameMap.getPlayer1()!=null) {
-
-            if (reach_player1&&GameMap.getPlayer1()!=null) {
-
                 attack = true;
                 findPath(GameMap.getPlayer1(), 1);
             }
@@ -509,5 +499,4 @@ public class NPC1 extends Character {
         //}
         nextStep();
     }
-}
 }
